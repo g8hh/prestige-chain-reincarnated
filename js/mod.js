@@ -1,5 +1,5 @@
 let modInfo = {
-	name: "The Tree of Life",
+	name: "Prestige Chain Reincarnated",
 	id: "prestige_chain_reincarnated",
 	author: "pg132",
 	pointsName: "Life Points",
@@ -20,7 +20,7 @@ let VERSION = {
 var forceEndgame = false
 function isEndgame() {
 	if (forceEndgame) return true
-	return player.ch.points.gte(482)
+	return false
 }
 
 let changelog = `<h1>Changelog:</h1><br>

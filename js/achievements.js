@@ -165,23 +165,23 @@ function hasCompletedFirstNRows(n){
 }
 
 PROGRESSION_MILESTONES = {
-        1:   () => player.h.points.root(1).gte(20),
-        2:   () => player.h.points.root(2).gte(20),
-        3:   () => player.h.points.root(3).gte(20),
-        4:   () => player.h.deuterium.points.gte(Decimal.pow(100, 0)),
-        5:   () => player.h.deuterium.points.gte(Decimal.pow(100, 1)),
-        6:   () => player.h.atomic_hydrogen.points.div(5).gte(Decimal.pow(100, 0)),
-        7:   () => player.h.atomic_hydrogen.points.div(5).gte(Decimal.pow(100, 1)),
+        1:   () => player.points.gte(1),
+        2:   () => player.points.gte(10),
+        3:   () => player.points.gte(100),
+        4:   () => player.points.gte(1e4),
+        5:   () => player.points.gte(1e8),
+        6:   () => player.points.gte(1e16),
+        7:   () => player.points.gte(1e32),
 }
 
 PROGRESSION_MILESTONES_TEXT = {
-        1:   "20 Hydrogen",
-        2:   "400 Hydrogen",
-        3:   "8000 Hydrogen",
-        4:   "1 Deuterium",
-        5:   "100 Deuterium",
-        6:   "5 Atomic Hydrogen",
-        7:   "500 Atomic Hydrogen",
+        1:   "1 Point",
+        2:   "10 Points",
+        3:   "100 Points",
+        4:   "10,000 Points",
+        5:   "100,000,000 Points",
+        6:   "1e16 Points",
+        7:   "1e32 Points",
 }
 
 
