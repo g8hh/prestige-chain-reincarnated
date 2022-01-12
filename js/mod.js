@@ -20,6 +20,10 @@ let VERSION = {
 var forceEndgame = false
 function isEndgame() {
 	if (forceEndgame) return true
+	return isEndgameRaw()
+}
+
+function isEndgameRaw(){
 	return false
 }
 
@@ -108,7 +112,7 @@ var displayThings = [
 	}, 
 	function(){
 		if (paused || player.paused) return "<bdi style='color:#CC0033'>THE GAME IS PAUSED</bdi>"
-		if (player.keepGoing) return makeBlue("You are past endgame,<br>and the game might not be balanced here.")
+		if (player.keepGoing && isEndgameRaw()) return makeBlue("You are past endgame,<br>and the game might not be balanced here.")
 	},
 ]
 
