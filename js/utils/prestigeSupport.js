@@ -67,6 +67,14 @@ function getGeneralizedPrestigeGain(layer){
         return doPrestigeGainChange(ret, layer).floor()
 }
 
+function getGeneralizedEffectDisplay(layer){
+        if (player.tab != layer) return ""
+        let eff = tmp[layer].effect
+        let a = "which buffs point and all previous prestige gain by "
+
+        return a + format(eff) + "."
+}
+
 function getGeneralizedInitialPostMult(layer){
         let x = decimalOne
         let yet = false

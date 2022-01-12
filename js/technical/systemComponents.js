@@ -148,39 +148,10 @@ var systemComponents = {
 		Enter Modes: 
 		<table>
 			<tr>
-				<td>
-					<button class="opt" onclick="enterHardMode()">
-						<span v-if="player.hardMode"><bdi style='color:#CC0033'>{{"In hard mode"}}</bdi></span>
-						<span v-if="!player.hardMode"><bdi style='color:#3300CC'>{{"Enter hard mode"}}</bdi></span>
-					</button>
-				</td>
-				<td>
-					<button class="opt" onclick="enterExtremeMode()">
-						<span v-if="player.extremeMode"><bdi style='color:#CC0033'>{{"In extreme mode"}}</bdi></span>
-						<span v-if="!player.extremeMode"><bdi style='color:#3300CC'>{{"Enter extreme mode"}}</bdi></span>
-					</button>
-				</td>
-				<td>
-					<button class="opt" onclick="enterEasyMode()">
-						<span v-if="player.easyMode"><bdi style='color:#CC0033'>{{"In easy mode"}}</bdi></span>
-						<span v-if="!player.easyMode"><bdi style='color:#3300CC'>{{"Enter easy mode"}}</bdi></span>
-					</button>
-				</td>
+				
 			</tr>
 		</table>
 		<br><br>
-		<h2 style='color: #FF0066'>Hard mode</h2>:<br>
-		Most passive gains are 4x less and various other smaller nerfs<br><br>
-
-		<h2 style='color: #FF0066'>Easy mode</h2>:<br>
-		All bulk buying is done by default<br>
-		Gain 2x of all prestige currencies, and 4x of all passive gain currencies<br>
-		Gain 2x resets at once and pre-Phosphorus resource gain ^1.001<br><br>
-
-		<h2 style='color: #FF0066'>Extreme mode</h2>:<br>
-		Gain of all currencies is raised ^.75 (after everything except dilation)<br>
-		For protein, boosts from things other than mRNA and tRNA are ^.75<br><br>
-		
 		</span>
 		
 		<span v-if="!player.modTab">
@@ -215,7 +186,6 @@ var systemComponents = {
 
 		<h2 style='color: #7D5D9E'>Acknowledgements</h2><br>
 		Thank you to <b>Jacorb</b> for letting me use his multi save code!<br>
-		Thank you to <b>Digiprime</b> for the idea for the Organ layer!<br>
 		Thank you to <b>Lordshinjo</b> for a specific and accurate bug report on "autobuying"<br>buyables and helping to subsequently fix.<br>
 
 		<br><br><span v-if="player.showBuiltInSaves">

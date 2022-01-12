@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.001",
+	num: "0.001.5",
 	name: "Respecced Reincarnation",
 }
 
@@ -32,7 +32,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
-	<br><h3 style='color: #CC0000'>v0.001</h3><br>
+	<br><h3 style='color: #CC0000'>v0.001.5</h3><br>
 		- Various changes to make the game "playable".<br>
 	`
 

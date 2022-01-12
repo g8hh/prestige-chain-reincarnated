@@ -88,7 +88,7 @@ function filterOut(list, out){
         return list.filter(x => !out.includes(x) && !out.includes(Number(x)))
 }
 
-/*addLayer("a", {
+addLayer("a", {
         name: "Alligators", // This is optional, only used in a few places, If absent it just uses the layer id.
         symbol: "A", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
@@ -232,7 +232,7 @@ function filterOut(list, out){
                 33: getGeneralizedBuyableData("a", 33, function(){
                         return hasUpgrade("b", 51) //|| player.b.unlocked
                         }),
-                        * /
+                        */
         },
         tabFormat: {
                 "Upgrades": {
@@ -295,9 +295,9 @@ function filterOut(list, out){
                         player.a.buyables[resetBuyables[j]] = decimalZero
                 }
         },
-})*/
+})
 
-/*addLayer("ach", {
+addLayer("ach", {
         name: "Achievements",
         symbol: "⭑", 
         position: 1,
@@ -538,5 +538,5 @@ function filterOut(list, out){
                 },
         },
         doReset(layer){},
-})*/
+})
 
