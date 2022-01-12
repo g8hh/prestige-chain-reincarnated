@@ -256,24 +256,10 @@ function loadVue() {
 		`
 	})
 
-	Vue.component('secondary-display-blood', {
-		props: ['layer'],
-		template: `
-		<div><span v-if="player.or.deoxygenated_blood.points.lt('1e1000')">You have </span><h2 v-bind:style="{'color': tmp.or.color, 'text-shadow': '0px 0px 10px ' + tmp.or.color}">{{formatCurrency(player.or.oxygenated_blood.points)}}</h2> <bdi style='color:#66297D'>{{"OB"}}</bdi> and </span><h2 v-bind:style="{'color': tmp.or.color, 'text-shadow': '0px 0px 10px ' + tmp.or.color}">{{formatCurrency(player.or.deoxygenated_blood.points)}}</h2> <bdi style='color:#3379E3'>{{"DB"}}</bdi><br></div>
-		`
-	})
-
 	Vue.component('secondary-display3', {
 		props: ['layer', 'data'],
 		template: `
 		<div><span v-if="player[layer][data].points.lt('1e1000')">You have </span><h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{format(player[layer][data].points, 3)}}</h2> {{improveName(data)}}<br><br></div>
-		`
-	})
-
-	Vue.component('secondary-display-tokens2', {
-		props: ['layer', 'data'],
-		template: `
-		<div><span v-if="player[layer][data].points.lt('1e1000')">You have </span><h2 v-bind:style="{'color': tmp[layer].color, 'text-shadow': '0px 0px 10px ' + tmp[layer].color}">{{formatCurrency(player[layer][data].points)}}</h2> {{"Tokens II"}}<br><br></div>
 		`
 	})
 
@@ -590,6 +576,7 @@ function loadVue() {
 		</div>
 		`
 	})
+	
 	Vue.component('microtab', { // copy it
 		props: ['layer', 'data'],
 		computed: {

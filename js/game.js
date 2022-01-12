@@ -69,12 +69,7 @@ function softcap(value, cap, power = 0.5) {
 
 // Return true if the layer should be highlighted. By default checks for upgrades only.
 function shouldNotify(layer){
-	if (layer == "tokens" && hasUpgrade("cells", 42)) {
-		let data = tmp.tokens.buyables
-		return data[191].canAfford || data[192].canAfford || (data[193].canAfford && data[193].unlocked)
-	}
 	for (id in tmp[layer].upgrades){
-		if (layer == "cells" && id > 100 && tmp.mc.layerShown) break
 		if (isPlainObject(layers[layer].upgrades[id])){
 			if (canAffordUpgrade(layer, id) && !hasUpgrade(layer, id) && tmp[layer].upgrades[id].unlocked){
 				return true
@@ -82,10 +77,7 @@ function shouldNotify(layer){
 		}
 	}
 	if (player[layer].activeChallenge && canCompleteChallenge(layer, player[layer].activeChallenge)) {
-		if (!inChallenge("l", 12) || layers.l.grid.getGemEffect(205).eq(0)) return true
-		if (player.l.activeChallenge == 12) {
-			if (player.l.grid[player.l.activeChallengeID].gems.gte(1e4)) return true
-		}
+		return true
 	}
 
 	if (tmp[layer].shouldNotify) return true

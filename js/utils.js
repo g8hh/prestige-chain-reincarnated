@@ -1,10 +1,3 @@
-function nerfBminigameBuyableAmounts(x){
-	if (x.lt(1000)) return x
-	if (hasUpgrade("h", 52)) return x
-	if (player.extremeMode) return x
-	return x.times(x.ln()).div(Math.log(1000))
-}
-
 function combineStrings(l){
 	a = ""
 	for (i = 0; i < l.length; i++){
@@ -17,7 +10,6 @@ function combineStrings(l){
 // ***************************
 
 function improveName(s){
-	if (s == "dna_science") return "DNA Science"
 	x = s.split("_")
 	l = x.length
 	ret = ""
