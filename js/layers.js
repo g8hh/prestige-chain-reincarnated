@@ -1,14 +1,14 @@
 function getPointGen(){
-	let gain = getPointConstant()
-        gain = gain.times(getPointMultiplier())
-        gain = gain.pow(getPointExponentiation())
-        gain = dilate(gain, getPointDilationExponent())
+	let ret = getPointConstant()
+        ret = ret.times(getPointMultiplier())
+        ret = ret.pow(getPointExponentiation())
+        ret = dilate(ret, getPointDilationExponent())
 
-	return gain
+	return ret
 }
 
 function getPointConstant(){
-        let ret = new Decimal(.1)
+        let ret = decimalOne
 
         return ret
 }
@@ -16,19 +16,26 @@ function getPointConstant(){
 function getPointMultiplier(){
         let ret = decimalOne
 
+        for (let i = 0; i < LAYERS.length; i++){
+                if (layers[LAYERS[i]].row == "side") continue
+                                        ret = ret.times(tmp[LAYERS[i]].effect || decimalOne)
+        }
+
+        if (hasUpgrade("a", 11))        ret = ret.times(tmp.a.upgrades[11].effect)
+
         return ret
 }
 
 function getPointExponentiation(){
-        let exp = decimalOne
+        let ret = decimalOne
         
-        return exp
+        return ret
 }
 
 function getPointDilationExponent(){
-        let exp = decimalOne
+        let ret = decimalOne
         
-        return exp
+        return ret
 }
 
 function getDilationExponent(){
@@ -113,24 +120,24 @@ addLayer("a", {
                 return getGeneralizedPrestigeGain("a")
         },
         getBaseDiv(){
-                let x = decimalOne
+                let ret = decimalOne
                 
-                return x
+                return ret
         },
         getGainExp(){
-                let x = new Decimal(2)
+                let ret = new Decimal(2)
 
-                return x
+                return ret
         },
         getGainMultPre(){
-                let x = decimalOne
+                let ret = decimalOne
 
-                return x
+                return ret
         },
         getGainMultPost(){
-                let x = getGeneralizedInitialPostMult("a")
+                let ret = getGeneralizedInitialPostMult("a")
 
-                return x
+                return ret
         },
         effect(){
                 if (!isPrestigeEffectActive("a")) return decimalOne
@@ -185,16 +192,17 @@ addLayer("a", {
                 rows: 5,
                 cols: 5,
                 11: {
-                        title: "And",
-                        description: "Amoebas boost point gain",
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>And"
+                        },
+                        description(){
+                                let a = "Alligators multiply point gain"
+                                if (player.shiftAlias) return "log10(x+10)<sup>3</sup>"
+                                return a + br + "Currently: " + format(tmp.a.upgrades[11].effect)
+                        },
                         cost: new Decimal(2),
                         effect(){
-                                let exp = 3
-
-                                return player.a.points.plus(10).log10().pow(exp)
-                        },
-                        effectDisplay(){
-                                return format(tmp.a.upgrades[11].effect)
+                                return player.a.points.plus(10).log10().pow(3)
                         },
                         unlocked(){
                                 return player.a.best.gt(0) //|| player.b.unlocked

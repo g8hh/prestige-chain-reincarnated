@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.001.5",
+	num: "0.001.6",
 	name: "Respecced Reincarnation",
 }
 
