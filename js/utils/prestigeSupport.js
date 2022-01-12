@@ -19,6 +19,25 @@ function getsReset(layer, layerPrestiging) {
         return ids[layer] < ids[layerPrestiging]
 }
 
+function isPassiveGainActive(layer){
+        if (layer == "o") return false
+        if (layer == "n") return false
+        if (layer == "m") return false
+        if (layer == "l") return false
+        if (layer == "k") return false
+        if (layer == "j") return false
+        if (layer == "i") return false
+        if (layer == "h") return false
+        if (layer == "g") return false
+        if (layer == "f") return false
+        if (layer == "e") return false
+        if (layer == "d") return false
+        if (layer == "c") return false
+        if (layer == "b") return false
+        if (layer == "a") return false
+        console.log("issue")
+}
+
 function isPrestigeEffectActive(layer){
         if (layer == "o") return true
         if (layer == "n") return true
@@ -59,7 +78,7 @@ function getGeneralizedPrestigeGain(layer){
         let pst = tmp[layer].getGainMultPost
         let div = tmp[layer].getBaseDiv
 
-        let a = pts.div(div)
+        let a = pts.floor().div(div)
         if (a.lt(1)) return decimalZero
 
         let ret = a.log10().times(pre).pow(exp).times(pst)
@@ -102,6 +121,21 @@ function getGeneralizedPrestigeButtonText(layer){
         let exp = tmp[layer].getGainExp
         let pst = tmp[layer].getGainMultPost
         let div = tmp[layer].getBaseDiv
+
+        if (player.shiftAlias) {
+                let ret = "(log10(PTS/DIV)*PRE)<sup>EXP</sup>*PSTEND"
+                ret = ret.replace("PTS", layers[layer].baseResource)
+                ret = ret.replace("DIV", format(div))
+                ret = ret.replace("PRE", format(pre))
+                ret = ret.replace("PST", format(pst))
+                ret = ret.replace("EXP", format(exp))
+                ret = ret.replace("/1.00)", ")") // if div == 1
+                ret = ret.replace("*1.00)", ")") // if pre == 1
+                ret = ret.replace("<sup>1.00</sup>", "") // if exp == 1
+                ret = ret.replace("*1.00END", "") // if pst == 1
+                ret = ret.replace("END", "")
+                return ret
+        }
 
         let nextnum = gain.plus(1).div(pst).max(1).root(exp).div(pre).pow10().times(div).ceil()
 

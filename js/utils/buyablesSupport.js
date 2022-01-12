@@ -12,9 +12,23 @@ var MAIN_BUYABLE_DATA = {
                         initial: new Decimal(1.5),
                 },
                 bases(){
-                        let b0 = new Decimal(500)
-                        let b1 = new Decimal(2)
+                        let b0 = new Decimal(30)
+                        let b1 = new Decimal(1.2)
                         let b2 = new Decimal(1.001)
+                        return [b0, b1, b2]
+                },
+        },
+        a12: {
+                name: "A 12",
+                func: "exp",
+                effects: "Alligators",
+                base: {
+                        initial: new Decimal(1.1),
+                },
+                bases(){
+                        let b0 = new Decimal(500)
+                        let b1 = new Decimal(1.5)
+                        let b2 = new Decimal(1.003)
                         return [b0, b1, b2]
                 },
         },
@@ -355,10 +369,6 @@ function reCalcBuyableEffect(layer, id){
         let amt = getBuyableTotal(layer, id)
         let ret = getBuyableEffectFunction(layer,id)(base, amt)
 
-        if (softcap_data[layer+"_buy"+id] != undefined){
-                ret = softcap(ret, layer+"_buy"+id)
-        }
-
         return ret
 }
 
@@ -459,11 +469,16 @@ function getBuyableDisplay(layer, id){
         if (player.tab != layer) return ""
         if (player.subtabs[layer].mainTabs != "Buyables") return ""
         //if we arent on the tab, then we dont care :) (makes it faster)
-        let amt = "<b><h2>Amount</h2>: " + getBuyableAmountDisplay(layer, id) + "</b><br>"
-        let eff1 = "<b><h2>Effect</h2>: " + getBuyableEffectSymbol(layer, id) 
-        let savedEff = CURRENT_BUYABLE_EFFECTS[layer + id]
-        let eff2 = format(savedEff, 4) + " " + MAIN_BUYABLE_DATA[layer + id]["effects"] + "</b><br>"
-        let cost = "<b><h2>Cost</h2>: " + format(getBuyableCost(layer, id)) + " " + getPrestigeName(layer) + "</b><br>"
+        if (!shiftDown) {
+                let amt = "<b><h2>Amount</h2>: " + getBuyableAmountDisplay(layer, id) + "</b><br>"
+                let eff1 = "<b><h2>Effect</h2>: " + getBuyableEffectSymbol(layer, id) 
+                let savedEff = CURRENT_BUYABLE_EFFECTS[layer + id]
+                let eff2 = format(savedEff, 4) + " " + MAIN_BUYABLE_DATA[layer + id]["effects"] + "</b><br>"
+                let cost = "<b><h2>Cost</h2>: " + format(getBuyableCost(layer, id)) + " " + layers[layer].name + "</b><br>"
+        
+                return "<br>" + amt + eff1 + eff2 + cost + "Shift to see details"
+        }
+
         let eformula = ""
         if (MAIN_BUYABLE_DATA[layer + id]["eFormula"] != undefined) {
                 eformula = MAIN_BUYABLE_DATA[layer + id]["eFormula"]
@@ -472,43 +487,19 @@ function getBuyableDisplay(layer, id){
         } else {
                 eformula = format(getBuyableBase(layer, id), 4) + getBuyableEffectString(layer, id)
         }
-        //if its undefined set it to that
-        //otherwise use normal formula
-        let ef1 = "<b><h2>Effect formula</h2>:<br>"
-        let ef2 = "</b><br>"
-
-        let exformula = getBuyableExtraText(layer, id)
-
-        /*let scs = false
-        if (softcap_data[layer+"_buy"+id] != undefined && softcap_data[layer+"_buy"+id][1] != undefined){
-                scs = softcap_data[layer+"_buy"+id][1].active
-                if (scs == undefined) scs = true
-                if (typeof scs == "function") scs = scs()
-                scs = scs && Decimal.lte(softcap_data[layer+"_buy"+id][1].start, savedEff)
-        }
-
-        let scsText = scs ? " (softcapped)" : ""*/
-
-        let allEff = ef1 + eformula + /*scsText +*/ ef2
-
-        if (!shiftDown) {
-                let end = "Shift to see details"
-                let start = amt + eff1 + eff2 + cost
-                return "<br>" + start + end
-        }
+        let allEff = "<b><h2>Effect formula</h2>:<br>" + eformula + "</b><br>"
 
         let bases = getBuyableBases(layer, id)
         let cost1 = "<b><h2>Cost formula</h2>:<br>"
         let cost3 = "</b><br>"
-        let cost2a = bases[0].eq(1) ? "" :  "(" + formatBuyableCostBase(bases[0]) + ")"
-        let cost2b = bases[1].eq(1) ? "" : "*(" + formatBuyableCostBase(bases[1]) + "^x)"
-        let cost2c = bases[2].eq(1) ? "" : "*(" + formatBuyableCostBase(bases[2]) + "^x<sup>2</sup>)" 
+        let cost2a = bases[0].eq(1) ? "" :  "" + formatBuyableCostBase(bases[0]) + ""
+        let cost2b = bases[1].eq(1) ? "" : "*" + formatBuyableCostBase(bases[1]) + "<sup>x</sup>"
+        let cost2c = bases[2].eq(1) ? "" : "*" + formatBuyableCostBase(bases[2]) + "<sup>x<sup>2</sup></sup>" 
         let cost2 = cost2a + cost2b + cost2c
         if (cost2[0] == "*") cost2 = cost2.slice(1) //removes the star if its the first character
         let allCost = cost1 + cost2 + cost3
 
-        let end = allEff + exformula + allCost
-        return "<br>" + end
+        return br + allEff + getBuyableExtraText(layer, id) + allCost
 }
 
 function formatBuyableCostBase(x){

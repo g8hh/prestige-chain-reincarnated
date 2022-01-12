@@ -831,6 +831,9 @@ function loadVue() {
 			mouseY,
 			run,
 			gridRun,
+			CURRENT_BUYABLE_EFFECTS,
+			CURRENT_BUYABLE_BASES,
+			CURRENT_BUYABLE_EXTRAS,
 		},
 	})
 }

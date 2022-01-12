@@ -22,6 +22,8 @@ function getPointMultiplier(){
         }
 
         if (hasUpgrade("a", 11))        ret = ret.times(tmp.a.upgrades[11].effect)
+                                        ret = ret.times(CURRENT_BUYABLE_EFFECTS["a11"])
+        if (hasUpgrade("a", 12))        ret = ret.times(tmp.a.upgrades[12].effect)
 
         return ret
 }
@@ -113,7 +115,7 @@ addLayer("a", {
         branches: [],
         requires: decimalOne, // Can be a function that takes requirement increases into account
         resource: "Alligators", // Name of prestige currency
-        baseResource: "points", // Name of resource prestige is based on
+        baseResource: "Points", // Name of resource prestige is based on
         baseAmount() {return player.points.floor()}, // Get the current amount of baseResource
         type: "custom", // normal: cost to gain currency depends on amount gained. static: cost depends on how much you already have
         getResetGain() {
@@ -136,6 +138,8 @@ addLayer("a", {
         },
         getGainMultPost(){
                 let ret = getGeneralizedInitialPostMult("a")
+
+                                                ret = ret.times(CURRENT_BUYABLE_EFFECTS["a12"])
 
                 return ret
         },
@@ -162,7 +166,7 @@ addLayer("a", {
                 if (tmp.a.getResetGain.gt(0)) data.unlocked = true
 
                 data.best = data.best.max(data.points)
-                if (false) {
+                if (isPassiveGainActive("a")) {
                         data.points = data.points.plus(tmp.a.getResetGain.times(diff))
                         data.total   = data.total.plus(tmp.a.getResetGain.times(diff))
                         data.autotimes += diff
@@ -182,18 +186,18 @@ addLayer("a", {
         row: 0, // Row the layer is in on the tree (0 is the first row)
         layerShown(){return true},
         prestigeButtonText(){
-                if (false) return ""
+                if (isPassiveGainActive("a")) return ""
                 return getGeneralizedPrestigeButtonText("a")
         },
         canReset(){
-                return player.a.time >= 2 && !false && tmp.a.getResetGain.gt(0)
+                return player.a.time >= 2 && !isPassiveGainActive("a") && tmp.a.getResetGain.gt(0)
         },
         upgrades: {
                 rows: 5,
                 cols: 5,
                 11: {
                         title(){
-                                return "<bdi style='color: #" + getUndulatingColor() + "'>And"
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A-ligator"
                         },
                         description(){
                                 let a = "Alligators multiply point gain"
@@ -208,25 +212,39 @@ addLayer("a", {
                                 return player.a.best.gt(0) //|| player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 11)
+                12: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Al-igator"
+                        },
+                        description(){
+                                return "Each of the first nine upgrades unlocks an Alligator buyable and doubles point gain"
+                        },
+                        cost: new Decimal(30),
+                        effect(){
+                                return Decimal.pow(2, Math.min(9, player.a.upgrades.length))
+                        },
+                        unlocked(){
+                                return player.a.best.gt(10) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 12)
         },
         buyables: {
                 rows: 3,
                 cols: 3,
                 11: getGeneralizedBuyableData("a", 11, function(){
-                        return hasUpgrade("a", 15) //|| player.b.unlocked
+                        return hasUpgrade("a", 12) //|| player.b.unlocked
                         }),
-                /*
                 12: getGeneralizedBuyableData("a", 12, function(){
-                        return hasUpgrade("a", 22) //|| player.b.unlocked
-                        }),
+                        return hasUpgrade("a", 12) //|| player.b.unlocked
+                        }),/*
                 13: getGeneralizedBuyableData("a", 13, function(){
-                        return hasUpgrade("a", 31) //|| player.b.unlocked
+                        return hasUpgrade("a", 13) //|| player.b.unlocked
                         }),
                 21: getGeneralizedBuyableData("a", 21, function(){
-                        return hasUpgrade("b", 21) //|| player.b.unlocked
+                        return hasUpgrade("a", 14) //|| player.b.unlocked
                         }),
                 22: getGeneralizedBuyableData("a", 22, function(){
-                        return hasUpgrade("b", 24) //|| player.b.unlocked
+                        return hasUpgrade("a", 15) //|| player.b.unlocked
                         }),
                 23: getGeneralizedBuyableData("a", 23, function(){
                         return hasUpgrade("c", 12) //|| player.b.unlocked
@@ -245,7 +263,7 @@ addLayer("a", {
         tabFormat: {
                 "Upgrades": {
                         content: ["main-display",
-                                ["prestige-button", "", function (){ return false ? {'display': 'none'} : {}}],
+                                ["prestige-button", "", function (){ return isPassiveGainActive("a") ? {'display': 'none'} : {}}],
                                 ["display-text",
                                         function() {
                                                 return shiftDown ? "Your best Alligators is " + format(player.a.best) : "You have done " + formatWhole(player.a.times) + " Alligator resets"
@@ -253,7 +271,7 @@ addLayer("a", {
                                 ],
                                 ["display-text",
                                         function() {
-                                                if (false) return "You are gaining " + format(tmp.a.getResetGain) + " Alligators per second"
+                                                if (isPassiveGainActive("a")) return "You are gaining " + format(tmp.a.getResetGain) + " Alligators per second"
                                                 return "There is a two second cooldown for prestiging (" + format(Math.max(0, 2-player.a.time)) + ")" 
                                         },
                                 ],
@@ -267,15 +285,18 @@ addLayer("a", {
                         content: ["main-display",
                                 ["display-text",
                                         function() {
-                                                if (false) return "You are gaining " + format(tmp.a.getResetGain) + " Alligators per second"
+                                                if (isPassiveGainActive("a")) return "You are gaining " + format(tmp.a.getResetGain) + " Alligators per second"
                                                 return ""
                                         },
                                 ],
                                 "buyables"],
                         unlocked(){
-                                return false //|| player.b.unlocked
+                                return hasUpgrade("a", 12) //|| player.b.unlocked
                         },
                 },
+        },
+        onPrestige(gain){
+                player.a.times ++
         },
         doReset(layer){
                 let data = player.a

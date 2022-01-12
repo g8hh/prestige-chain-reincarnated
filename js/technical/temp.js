@@ -117,6 +117,8 @@ function updateTemp(noError = false) {
 	}
 	if (checkWordData()) player.wordsSpelled ++
 
+	updateAllBuyableExtras()
+	updateAllBuyableEffects()
 }
 
 function updateTempData(layerData, tmpData, funcsData, useThis, noError = false, firstStep = false) {

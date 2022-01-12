@@ -74,7 +74,7 @@ function challengeEffect(layer, id) {
 function getBuyableAmount(layer, id) {
 	return player[layer].buyables[id]
 }
-
+/*
 function setBuyableAmount(layer, id, amt) {
 	player[layer].buyables[id] = amt
 }
@@ -97,7 +97,7 @@ function getBuyableCost(layer, id){
 
 function getBuyableBase(layer, id){
 	return tmp[layer].buyables[id].base
-}
+}*/
 
 /* CLICKABLE STUFF */
 
