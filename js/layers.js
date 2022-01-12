@@ -88,15 +88,15 @@ function filterOut(list, out){
         return list.filter(x => !out.includes(x) && !out.includes(Number(x)))
 }
 
-addLayer("a", {
+/*addLayer("a", {
         name: "Alligators", // This is optional, only used in a few places, If absent it just uses the layer id.
         symbol: "A", // This appears on the layer's node. Default is the id with the first letter capitalized
         position: 0, // Horizontal position within a row. By default it uses the layer id and sorts in alphabetical order
         startData() { return {
                 unlocked: false,
-		points: new Decimal(0),
-                best: new Decimal(0),
-                total: new Decimal(0),
+		points: decimalZero,
+                best: decimalZero,
+                total: decimalZero,
                 abtime: 0,
                 time: 0,
                 times: 0,
@@ -104,7 +104,7 @@ addLayer("a", {
         }},
         color: "#BB4C83",
         branches: [],
-        requires: new Decimal(0), // Can be a function that takes requirement increases into account
+        requires: decimalOne, // Can be a function that takes requirement increases into account
         resource: "Alligators", // Name of prestige currency
         baseResource: "points", // Name of resource prestige is based on
         baseAmount() {return player.points.floor()}, // Get the current amount of baseResource
@@ -113,44 +113,31 @@ addLayer("a", {
                 return getGeneralizedPrestigeGain("a")
         },
         getBaseDiv(){
-                let x = new Decimal(1)
+                let x = decimalOne
+                
                 return x
         },
         getGainExp(){
                 let x = new Decimal(2)
-                if (hasUpgrade("a", 32)) x = x.times(3)
-
-                x = x.plus(tmp.a.buyables[21].effect)
-                x = x.plus(getGoalChallengeReward("00"))
 
                 return x
         },
         getGainMultPre(){
-                let x = new Decimal(1)
+                let x = decimalOne
+
                 return x
         },
         getGainMultPost(){
                 let x = getGeneralizedInitialPostMult("a")
 
-                if (hasUpgrade("a", 13)) x = x.times(upgradeEffect("a", 13))
-                if (hasUpgrade("a", 14)) x = x.times(upgradeEffect("a", 14))
-                if (hasUpgrade("a", 23)) x = x.times(2)
-                                         x = x.times(getBuyableEffect("a", 12))
-                if (hasUpgrade("b", 11)) x = x.times(upgradeEffect("b", 11))
-                                         x = x.times(getBuyableEffect("a", 31))
-                                         x = x.times(getBuyableEffect("b", 21))
-                                         x = x.times(getBuyableEffect("c", 23))
-                                         x = x.times(tmp.goalsii.effect)
-
                 return x
         },
         effect(){
-                if (!isPrestigeEffectActive("a")) return new Decimal(1)
+                if (!isPrestigeEffectActive("a")) return decimalOne
 
                 let amt = player.a.points
 
                 let exp = new Decimal(.5)
-                exp = exp.plus(CURRENT_BUYABLE_EFFECTS["f32"])
 
                 let ret = amt.plus(1).pow(exp)
 
@@ -158,6 +145,9 @@ addLayer("a", {
         },
         effectDescription(){
                 return getGeneralizedEffectDisplay("a")
+        },
+        getNextAt(){
+                return getGeneralizedNextAt("a")
         },
         update(diff){
                 let data = player.a
@@ -199,26 +189,17 @@ addLayer("a", {
                         description: "Amoebas boost point gain",
                         cost: new Decimal(2),
                         effect(){
-                                if (inChallenge("b", 12)) return new Decimal(1)
-                                
                                 let exp = 3
-                                if (hasUpgrade("a", 21)) exp += player.a.upgrades.length * .5
 
-                                if (hasUpgrade("a", 44)) exp *= exp
-                                if (hasUpgrade("c", 11)) exp *= 2
-
-                                let ret = player.a.points.times(10).plus(20).log10().pow(exp)
-                                return ret
+                                return player.a.points.plus(10).log10().pow(exp)
                         },
                         effectDisplay(){
-                                if (player.tab != "a") return ""
-                                if (player.subtabs.a.mainTabs != "Upgrades") return ""
                                 return format(tmp.a.upgrades[11].effect)
                         },
                         unlocked(){
-                                return player.a.best.gt(0) || hasUnlockedPast("a")
-                        }, //hasUpgrade("a", 11)
-                },
+                                return player.a.best.gt(0) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 11)
         },
         buyables: {
                 rows: 3,
@@ -226,6 +207,7 @@ addLayer("a", {
                 11: getGeneralizedBuyableData("a", 11, function(){
                         return hasUpgrade("a", 15) //|| player.b.unlocked
                         }),
+                /*
                 12: getGeneralizedBuyableData("a", 12, function(){
                         return hasUpgrade("a", 22) //|| player.b.unlocked
                         }),
@@ -250,6 +232,7 @@ addLayer("a", {
                 33: getGeneralizedBuyableData("a", 33, function(){
                         return hasUpgrade("b", 51) //|| player.b.unlocked
                         }),
+                        * /
         },
         tabFormat: {
                 "Upgrades": {
@@ -302,19 +285,19 @@ addLayer("a", {
                 }
 
                 //resources
-                data.points = new Decimal(0)
-                data.total = new Decimal(0)
-                data.best = new Decimal(0)
+                data.points = decimalZero
+                data.total = decimalZero
+                data.best = decimalZero
 
                 //buyables
                 let resetBuyables = [11, 12, 13, 21, 22, 23, 31, 32, 33]
                 for (let j = 0; j < resetBuyables.length; j++) {
-                        player.a.buyables[resetBuyables[j]] = new Decimal(0)
+                        player.a.buyables[resetBuyables[j]] = decimalZero
                 }
         },
-})
+})*/
 
-addLayer("ach", {
+/*addLayer("ach", {
         name: "Achievements",
         symbol: "⭑", 
         position: 1,
@@ -555,5 +538,5 @@ addLayer("ach", {
                 },
         },
         doReset(layer){},
-})
+})*/
 

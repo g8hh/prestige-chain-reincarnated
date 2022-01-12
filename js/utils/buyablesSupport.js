@@ -10,40 +10,12 @@ var MAIN_BUYABLE_DATA = {
                 effects: "points",
                 base: {
                         initial: new Decimal(1.5),
-                        1: {
-                                active: function(){
-                                        return hasUpgrade("a", 34)
-                                },
-                                amount: function(){
-                                        return tmp.a.buyables[13].total.div(100)
-                                },
-                                type: "add",
-                        },
-                        2: {
-                                active: function(){
-                                        return hasUpgrade("d", 11)
-                                },
-                                amount: function(){
-                                        return tmp.a.buyables[32].total
-                                },
-                                type: "add",
-                        },
                 },
                 bases(){
                         let b0 = new Decimal(500)
                         let b1 = new Decimal(2)
                         let b2 = new Decimal(1.001)
                         return [b0, b1, b2]
-                },
-                a12: {
-                        active: function(){
-                                return hasUpgrade("a", 24)
-                        }
-                },
-                a13: {
-                        active: function(){
-                                return hasUpgrade("a", 34)
-                        }
                 },
         },
 }
@@ -91,31 +63,31 @@ var CURRENT_BUYABLE_EFFECTS = {}
 var BUYABLES_FUNCTION_NAMES = {
         "exp": {
                 "func": BUYABLE_EFFECT_EXPONENTIAL,
-                "identity": new Decimal(1),
+                "identity": decimalOne,
                 "string": "^x",
                 "eff": "*",
         },
         "exp_sqrt":{
                 "func": BUYABLE_EFFECT_EXPONENTIAL_SQRT,
-                "identity": new Decimal(1),
+                "identity": decimalOne,
                 "string": "^sqrt(x)",
                 "eff": "*",
         },
         "exp_cbrt": {
                 "func": BUYABLE_EFFECT_EXPONENTIAL_CBRT,
-                "identity": new Decimal(1),
+                "identity": decimalOne,
                 "string": "^cbrt(x)",
                 "eff": "*",
         },
         "lin": {
                 "func": BUYABLES_EFFECT_LINEAR,
-                "identity": new Decimal(0),
+                "identity": decimalZero,
                 "string": "*x",
                 "eff": "+",
         },
         "lin_sqrt": {
                 "func": BUYABLES_EFFECT_LINEAR_SQRT,
-                "identity": new Decimal(0),
+                "identity": decimalZero,
                 "string": "*sqrt(x)",
                 "eff": "+",
         },
@@ -124,7 +96,7 @@ var BUYABLES_FUNCTION_NAMES = {
 function resetCurrBuyableExtras(){ 
         // Fully general
         for (i in MAIN_BUYABLE_DATA){
-                CURRENT_BUYABLE_EXTRAS[i] = new Decimal(0)
+                CURRENT_BUYABLE_EXTRAS[i] = decimalZero
         }
 }
 resetCurrBuyableExtras()
@@ -185,7 +157,7 @@ function isBuyableUnlocked(layer, id){
 
 function getBuyableTotal(layer, id){
         // Fully general
-        if (!isBuyableDefined(layer, id)) return new Decimal(0)
+        if (!isBuyableDefined(layer, id)) return decimalZero
 
         let a = calcBuyableExtra(layer, id)
 
@@ -220,19 +192,19 @@ function getNoExtras(layer, id){
 
 function calcBuyableExtra(layer, id){
         // Fully general
-        if (!isBuyableDefined(layer, id)) return new Decimal(0)
-        if (getNoExtras(layer, id)) return new Decimal(0)
+        if (!isBuyableDefined(layer, id)) return decimalZero
+        if (getNoExtras(layer, id)) return decimalZero
         let a = CURRENT_BUYABLE_EXTRAS[layer+id]
         if (a != undefined) return a
-        return new Decimal(0)
+        return decimalZero
 }
 
 function reCalcBuyableExtra(layer, id){
         // Fully general
         let key = layer + id
         let data = MAIN_BUYABLE_DATA[key] || {}
-        if (data == undefined) return new Decimal(0)
-        let amt = new Decimal(0)
+        if (data == undefined) return decimalZero
+        let amt = decimalZero
         for (i in data) {
                 if (!isValidBuyableCode(i)) continue
                 if (data[i].active() == true) amt = amt.plus(getCodedBuyableAmount(i))
@@ -404,7 +376,7 @@ function getBuyableBases(layer, id){
         return MAIN_BUYABLE_DATA[layer+id].bases()
 }
 
-function getBuyableCost(layer, id, delta = new Decimal(0)){
+function getBuyableCost(layer, id, delta = decimalZero){
         // assuming the cost formula is alwuas the same fully general
         let bases = getBuyableBases(layer, id)
         let x = getBuyableAmount(layer, id).plus(delta)
@@ -610,7 +582,7 @@ function isBuyableActive(layer, thang){
 }
 
 function getABBulk(layer){
-        let amt = new Decimal(1)
+        let amt = decimalOne
         if (layer == "a") {
         }
         if (layer == "b") {
