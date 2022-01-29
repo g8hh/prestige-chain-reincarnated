@@ -116,7 +116,7 @@ addLayer("a", {
         }},
         color: "#BB4C83",
         branches: [],
-        requires: decimalOne, // Can be a function that takes requirement increases into account
+        requires: new Decimal(10), // Can be a function that takes requirement increases into account
         resource: "Alligators", // Name of prestige currency
         baseResource: "Points", // Name of resource prestige is based on
         baseAmount() {return player.points.floor()}, // Get the current amount of baseResource
