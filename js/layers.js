@@ -30,6 +30,9 @@ function getPointMultiplier(){
 
 function getPointExponentiation(){
         let ret = decimalOne
+
+        if (hasUpgrade("a", 15))        ret = ret.times(1.01)
+        if (hasMilestone("a", 2))       ret = ret.times(Decimal.pow(1.01, player.a.milestones.length))
         
         return ret
 }
@@ -151,6 +154,7 @@ addLayer("a", {
                 let amt = player.a.points
 
                 let exp = new Decimal(.5)
+                exp = exp.plus(CURRENT_BUYABLE_EFFECTS["a23"])
 
                 let ret = amt.plus(1).pow(exp)
 
@@ -208,7 +212,8 @@ addLayer("a", {
                         },
                         cost: new Decimal(2),
                         effect(){
-                                return player.a.points.plus(10).log10().pow(3)
+                                let exp = CURRENT_BUYABLE_EFFECTS["a22"].plus(3)
+                                return player.a.points.plus(10).log10().pow(exp)
                         },
                         unlocked(){
                                 return player.a.best.gt(0) //|| player.b.unlocked
@@ -246,13 +251,49 @@ addLayer("a", {
                                 return "<bdi style='color: #" + getUndulatingColor() + "'>All-gator"
                         },
                         description(){
-                                return "[no buy yet]Gain 100% of Alligator gained on reset and one reset per second but lose the ability to prestige"
+                                return "Gain 100% of Alligator gained on reset and one reset per second but lose the ability to prestige"
                         },
                         cost: new Decimal(3e10),
                         unlocked(){
                                 return player.a.best.gt(1e11) || player.a.buyables[12].gte(44) //|| player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 14)
+                15: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A-l-gator"
+                        },
+                        description(){
+                                return "Add .005 to A 13 base and raise Point gain ^1.01"
+                        },
+                        cost: new Decimal(1e20),
+                        unlocked(){
+                                return player.a.best.gt(1e11) || player.a.buyables[12].gte(80) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 15)
+                21: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Al--gator"
+                        },
+                        description(){
+                                return "Remove A 1X base costs"
+                        },
+                        cost: new Decimal(1e40),
+                        unlocked(){
+                                return player.a.best.gt(1e42) || player.a.buyables[12].gte(132) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 21)
+                22: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Al--gator"
+                        },
+                        description(){
+                                return "Remove the linear exponential component of A 11's cost"
+                        },
+                        cost: new Decimal(1e70),
+                        unlocked(){
+                                return player.a.best.gt(1e72) || player.a.buyables[12].gte(192) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 22)
         },
         buyables: {
                 rows: 3,
@@ -265,7 +306,7 @@ addLayer("a", {
                         }),
                 13: getGeneralizedBuyableData("a", 13, function(){
                         return hasUpgrade("a", 13) //|| player.b.unlocked
-                        }),/*
+                        }),
                 21: getGeneralizedBuyableData("a", 21, function(){
                         return hasUpgrade("a", 14) //|| player.b.unlocked
                         }),
@@ -273,18 +314,48 @@ addLayer("a", {
                         return hasUpgrade("a", 15) //|| player.b.unlocked
                         }),
                 23: getGeneralizedBuyableData("a", 23, function(){
-                        return hasUpgrade("c", 12) //|| player.b.unlocked
-                        }),
+                        return hasUpgrade("a", 21) //|| player.b.unlocked
+                        }),/*
                 31: getGeneralizedBuyableData("a", 31, function(){
-                        return hasUpgrade("a", 53) //|| player.b.unlocked
+                        return hasUpgrade("a", 22) //|| player.b.unlocked
                         }),
                 32: getGeneralizedBuyableData("a", 32, function(){
-                        return hasUpgrade("b", 43) //|| player.b.unlocked
+                        return hasUpgrade("a", 23) //|| player.b.unlocked
                         }),
                 33: getGeneralizedBuyableData("a", 33, function(){
-                        return hasUpgrade("b", 51) //|| player.b.unlocked
+                        return hasUpgrade("a", 23) //|| player.b.unlocked
                         }),
                         */
+        },
+        milestones: {
+                1: {
+                        requirementDescription(){
+                                return "4 A22"
+                        },
+                        done(){
+                                return player.a.buyables[22].gte(4)
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: Per milestone add .001 to A 21's base."
+                        },
+                }, // hasMilestone("a", 1)
+                2: {
+                        requirementDescription(){
+                                return "1e300 Points"
+                        },
+                        done(){
+                                return player.points.gte(1e300)
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: Per milestone raise point gain ^1.01."
+                        },
+                }, // hasMilestone("a", 2)
         },
         tabFormat: {
                 "Upgrades": {
@@ -318,6 +389,19 @@ addLayer("a", {
                                 "buyables"],
                         unlocked(){
                                 return hasUpgrade("a", 12) //|| player.b.unlocked
+                        },
+                },
+                "Milestones": {
+                        content: [
+                                "main-display",
+                                ["display-text",
+                                        function() {
+                                                return "You have done " + formatWhole(player.a.times) + " Alligator resets"
+                                        }
+                                ],
+                                "milestones"],
+                        unlocked(){
+                                return player.a.buyables[22].gt(0) //|| player.b.unlocked
                         },
                 },
         },

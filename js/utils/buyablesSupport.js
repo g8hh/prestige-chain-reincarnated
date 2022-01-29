@@ -24,6 +24,8 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(30)
                         let b1 = new Decimal(1.1)
                         let b2 = new Decimal(1.001)
+                        if (hasUpgrade("a", 21)) b0 = decimalOne
+                        if (hasUpgrade("a", 22)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -33,11 +35,21 @@ var MAIN_BUYABLE_DATA = {
                 effects: "Alligators",
                 base: {
                         initial: new Decimal(1.3),
+                        1: {
+                                active(){
+                                        return true
+                                },
+                                type: "add",
+                                amount(){
+                                        return CURRENT_BUYABLE_EFFECTS["a21"]
+                                },
+                        }
                 },
                 bases(){
                         let b0 = new Decimal(200)
                         let b1 = new Decimal(1.3)
                         let b2 = new Decimal(1.003)
+                        if (hasUpgrade("a", 21)) b0 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -47,11 +59,72 @@ var MAIN_BUYABLE_DATA = {
                 effects: "A 11 base",
                 base: {
                         initial: new Decimal(.03),
+                        1: {
+                                active(){
+                                        return hasUpgrade("a", 15)
+                                },
+                                type: "add",
+                                amount(){
+                                        return new Decimal(.005)
+                                },
+                        },
                 },
                 bases(){
                         let b0 = new Decimal(300)
                         let b1 = new Decimal(1.5)
                         let b2 = new Decimal(1.01)
+                        if (hasUpgrade("a", 21)) b0 = decimalOne
+                        return [b0, b1, b2]
+                },
+        },
+        a21: {
+                name: "A 21",
+                func: "lin",
+                effects: "A 12 base",
+                base: {
+                        initial: new Decimal(.01),
+                        1: {
+                                active(){
+                                        return hasMilestone("a", 1)
+                                },
+                                type: "add",
+                                amount(){
+                                        return new Decimal(.001 * player.a.milestones.length)
+                                },
+                        }
+                },
+                bases(){
+                        let b0 = new Decimal(5e16)
+                        let b1 = new Decimal(3)
+                        let b2 = new Decimal(1.03)
+                        return [b0, b1, b2]
+                },
+        },
+        a22: {
+                name: "A 22",
+                func: "lin",
+                effects: "A-ligator effect exponent",
+                base: {
+                        initial: new Decimal(.3),
+                },
+                bases(){
+                        let b0 = new Decimal(1e34)
+                        let b1 = new Decimal(2)
+                        let b2 = new Decimal(1.05)
+                        return [b0, b1, b2]
+                },
+        },
+        a23: {
+                name: "A 23",
+                func: "lin",
+                effects: "Alligator effect exponent",
+                base: {
+                        initial: new Decimal(.1),
+                },
+                bases(){
+                        let b0 = new Decimal(1e55)
+                        let b1 = new Decimal(6)
+                        let b2 = new Decimal(1.1)
                         return [b0, b1, b2]
                 },
         },

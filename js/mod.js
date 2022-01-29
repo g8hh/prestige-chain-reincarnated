@@ -2,7 +2,7 @@ let modInfo = {
 	name: "Prestige Chain Reincarnated",
 	id: "prestige_chain_reincarnated",
 	author: "pg132",
-	pointsName: "Life Points",
+	pointsName: "Points",
 	modFiles: ["layers.js", "tree.js"],
 	discordName: "",
 	discordLink: "",
@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.002",
+	num: "0.003",
 	name: "Respecced Reincarnation",
 }
 
@@ -24,7 +24,7 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.a.points.gte(2e16)
+	return player.points.gte("1e580")
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -36,6 +36,9 @@ let changelog = `<h1>Changelog:</h1><br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.002</h3><br>
+		- Balanced until 1e580 Points.<br>
+		- Added three Alligator upgrades, two Alligator milestones, and three Alligator buyables.<br>
 	<br><h3 style='color: #CC0000'>v0.002</h3><br>
 		- Balanced until 2e16 Alligators.<br>
 		- Added two Alligator upgrades and an Alligator buyable.<br>
