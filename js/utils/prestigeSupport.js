@@ -34,7 +34,7 @@ function isPassiveGainActive(layer){
         if (layer == "d") return false
         if (layer == "c") return false
         if (layer == "b") return false
-        if (layer == "a") return false
+        if (layer == "a") return hasUpgrade("a", 14)
         console.log("issue")
 }
 

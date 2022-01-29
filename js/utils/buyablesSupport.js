@@ -10,10 +10,19 @@ var MAIN_BUYABLE_DATA = {
                 effects: "points",
                 base: {
                         initial: new Decimal(1.5),
+                        1: {
+                                active(){
+                                        return true
+                                },
+                                type: "add",
+                                amount(){
+                                        return CURRENT_BUYABLE_EFFECTS["a13"]
+                                },
+                        }
                 },
                 bases(){
                         let b0 = new Decimal(30)
-                        let b1 = new Decimal(1.2)
+                        let b1 = new Decimal(1.1)
                         let b2 = new Decimal(1.001)
                         return [b0, b1, b2]
                 },
@@ -23,12 +32,26 @@ var MAIN_BUYABLE_DATA = {
                 func: "exp",
                 effects: "Alligators",
                 base: {
-                        initial: new Decimal(1.1),
+                        initial: new Decimal(1.3),
                 },
                 bases(){
-                        let b0 = new Decimal(500)
-                        let b1 = new Decimal(1.5)
+                        let b0 = new Decimal(200)
+                        let b1 = new Decimal(1.3)
                         let b2 = new Decimal(1.003)
+                        return [b0, b1, b2]
+                },
+        },
+        a13: {
+                name: "A 13",
+                func: "lin",
+                effects: "A 11 base",
+                base: {
+                        initial: new Decimal(.03),
+                },
+                bases(){
+                        let b0 = new Decimal(300)
+                        let b1 = new Decimal(1.5)
+                        let b2 = new Decimal(1.01)
                         return [b0, b1, b2]
                 },
         },
@@ -337,7 +360,7 @@ function reCalcBuyableBase(layer, id){
                 //this is the data
                 if (data3 == undefined) break
                 //if data undefined done w loop
-                if (!data3.active()) continue
+                if (data3.active != undefined && !data3.active()) continue
                 //if the effect isnt active continue to next effect
                 let func = data3.type
                 let eff = data3.amount()

@@ -129,6 +129,8 @@ addLayer("a", {
         getGainExp(){
                 let ret = new Decimal(2)
 
+                if (hasUpgrade("a", 13)) ret = ret.max(player.a.upgrades.length)
+
                 return ret
         },
         getGainMultPre(){
@@ -227,6 +229,30 @@ addLayer("a", {
                                 return player.a.best.gt(10) //|| player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 12)
+                13: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A--igator"
+                        },
+                        description(){
+                                return "Alligator initial gain exponent is the number of Alligator upgrades"
+                        },
+                        cost: new Decimal(500),
+                        unlocked(){
+                                return player.a.best.gt(1000) || player.a.buyables[11].gte(12) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 13)
+                14: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>All-gator"
+                        },
+                        description(){
+                                return "[no buy yet]Gain 100% of Alligator gained on reset and one reset per second but lose the ability to prestige"
+                        },
+                        cost: new Decimal(3e10),
+                        unlocked(){
+                                return player.a.best.gt(1e11) || player.a.buyables[12].gte(44) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 14)
         },
         buyables: {
                 rows: 3,
@@ -236,10 +262,10 @@ addLayer("a", {
                         }),
                 12: getGeneralizedBuyableData("a", 12, function(){
                         return hasUpgrade("a", 12) //|| player.b.unlocked
-                        }),/*
+                        }),
                 13: getGeneralizedBuyableData("a", 13, function(){
                         return hasUpgrade("a", 13) //|| player.b.unlocked
-                        }),
+                        }),/*
                 21: getGeneralizedBuyableData("a", 21, function(){
                         return hasUpgrade("a", 14) //|| player.b.unlocked
                         }),

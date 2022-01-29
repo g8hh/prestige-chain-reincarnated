@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.001.8",
+	num: "0.002",
 	name: "Respecced Reincarnation",
 }
 
@@ -24,18 +24,22 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.a.points.gte(200)
+	return player.a.points.gte(2e16)
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<br><h2 style='color: #DDDD00'>Endgame:</h2><br>
-		Reaching the endgame screen (updated at least as of v0.001.8)<br><br>
+		Reaching the endgame screen (updated at least as of v0.002)<br><br>
 	<br><h2 style='color: #00CC00'>Notes</h2><br>
 		- Versions will be vA.B.C<br>
 		- A will be big releases.<br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.002</h3><br>
+		- Balanced until 2e16 Alligators.<br>
+		- Added two Alligator upgrades and an Alligator buyable.<br>
+		- Various code improvements.<br>
 	<br><h3 style='color: #CC0000'>v0.001.8</h3><br>
 		- Balanced until 200 Alligators.<br>
 		- Added two Alligator upgrades and two Alligator buyables.<br>
