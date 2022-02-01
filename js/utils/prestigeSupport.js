@@ -115,14 +115,14 @@ function getGeneralizedNextAt(layer){
         return gain.plus(1).div(pst).max(1).root(exp).div(pre).pow10().times(div).ceil()
 }
 
-function getGeneralizedPrestigeButtonText(layer){
+function getGeneralizedPrestigeButtonText(layer, forceFormula = false){
         let gain= tmp[layer].getResetGain
         let pre = tmp[layer].getGainMultPre
         let exp = tmp[layer].getGainExp
         let pst = tmp[layer].getGainMultPost
         let div = tmp[layer].getBaseDiv
 
-        if (player.shiftAlias) {
+        if (player.shiftAlias || forceFormula) {
                 let ret = "(log10(PTS/DIV)*PRE)<sup>EXP</sup>*PSTEND"
                 ret = ret.replace("PTS", layers[layer].baseResource)
                 ret = ret.replace("DIV", format(div))

@@ -133,6 +133,7 @@ addLayer("a", {
                 let ret = new Decimal(2)
 
                 if (hasUpgrade("a", 13)) ret = ret.max(player.a.upgrades.length)
+                ret = ret.plus(CURRENT_BUYABLE_EFFECTS["a31"])
 
                 return ret
         },
@@ -284,7 +285,7 @@ addLayer("a", {
                 }, // hasUpgrade("a", 21)
                 22: {
                         title(){
-                                return "<bdi style='color: #" + getUndulatingColor() + "'>Al--gator"
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A---gator"
                         },
                         description(){
                                 return "Remove the linear exponential component of A 11's cost"
@@ -294,6 +295,18 @@ addLayer("a", {
                                 return player.a.best.gt(1e72) || player.a.buyables[12].gte(192) //|| player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 22)
+                23: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A-li-ator"
+                        },
+                        description(){
+                                return "Remove A 22's base cost"
+                        },
+                        cost: new Decimal(1e119),
+                        unlocked(){
+                                return player.a.best.gt(1e123) || player.a.buyables[12].gte(261) //|| player.b.unlocked
+                        }, 
+                }, // hasUpgrade("a", 23)
         },
         buyables: {
                 rows: 3,
@@ -315,10 +328,10 @@ addLayer("a", {
                         }),
                 23: getGeneralizedBuyableData("a", 23, function(){
                         return hasUpgrade("a", 21) //|| player.b.unlocked
-                        }),/*
+                        }),
                 31: getGeneralizedBuyableData("a", 31, function(){
                         return hasUpgrade("a", 22) //|| player.b.unlocked
-                        }),
+                        }),/*
                 32: getGeneralizedBuyableData("a", 32, function(){
                         return hasUpgrade("a", 23) //|| player.b.unlocked
                         }),
@@ -350,12 +363,26 @@ addLayer("a", {
                                 return player.points.gte(1e300)
                         },
                         unlocked(){
-                                return true
+                                return hasMilestone("a", 1)
                         },
                         effectDescription(){
                                 return "Reward: Per milestone raise point gain ^1.01."
                         },
                 }, // hasMilestone("a", 2)
+                3: {
+                        requirementDescription(){
+                                return "1e650 Points"
+                        },
+                        done(){
+                                return player.points.gte("1e650")
+                        },
+                        unlocked(){
+                                return hasMilestone("a", 2)
+                        },
+                        effectDescription(){
+                                return "Reward: Remove the linear component of A 13's cost."
+                        },
+                }, // hasMilestone("a", 3)
         },
         tabFormat: {
                 "Upgrades": {
@@ -368,7 +395,10 @@ addLayer("a", {
                                 ],
                                 ["display-text",
                                         function() {
-                                                if (isPassiveGainActive("a")) return "You are gaining " + format(tmp.a.getResetGain) + " Alligators per second"
+                                                if (isPassiveGainActive("a")) {
+                                                        if (player.shiftAlias) return "Alligator gain formula is " + getGeneralizedPrestigeButtonText("a")
+                                                        return "You are gaining " + format(tmp.a.getResetGain) + " Alligators per second"
+                                                }
                                                 return "There is a two second cooldown for prestiging (" + format(Math.max(0, 2-player.a.time)) + ")" 
                                         },
                                 ],

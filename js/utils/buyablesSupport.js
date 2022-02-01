@@ -74,6 +74,7 @@ var MAIN_BUYABLE_DATA = {
                         let b1 = new Decimal(1.5)
                         let b2 = new Decimal(1.01)
                         if (hasUpgrade("a", 21)) b0 = decimalOne
+                        if (hasMilestone("a", 3)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -111,6 +112,7 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e34)
                         let b1 = new Decimal(2)
                         let b2 = new Decimal(1.05)
+                        if (hasUpgrade("a", 23)) b0 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -125,6 +127,20 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e55)
                         let b1 = new Decimal(6)
                         let b2 = new Decimal(1.1)
+                        return [b0, b1, b2]
+                },
+        },
+        a31: {
+                name: "A 31",
+                func: "lin",
+                effects: "Alligator gain exponent",
+                base: {
+                        initial: new Decimal(.1),
+                },
+                bases(){
+                        let b0 = new Decimal(1e84)
+                        let b1 = new Decimal(10)
+                        let b2 = new Decimal(1.2)
                         return [b0, b1, b2]
                 },
         },

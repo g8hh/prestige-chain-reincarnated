@@ -156,7 +156,7 @@ function getFirstNAchData(n){
 function hasCompletedFirstNRows(n){
 	for (i = 1; i <= n; i++){
 		for (j = 1; j <= 7; j++){
-			x = String(i) + String(j)
+			x = 10 * i + j
 			if (layers.ach.achievements[x] == undefined) return false
 			if (!hasAchievement("ach", x)) return false
 		}

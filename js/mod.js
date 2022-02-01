@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.003",
+	num: "0.004",
 	name: "Respecced Reincarnation",
 }
 
@@ -24,19 +24,24 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.points.gte("1e580")
+	return player.points.gte("1e1160")
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<br><h2 style='color: #DDDD00'>Endgame:</h2><br>
-		Reaching the endgame screen (updated at least as of v0.002)<br><br>
+		Reaching the endgame screen (updated at least as of v0.004)<br><br>
 	<br><h2 style='color: #00CC00'>Notes</h2><br>
 		- Versions will be vA.B.C<br>
 		- A will be big releases.<br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
-	<br><h3 style='color: #CC0000'>v0.002</h3><br>
+	<br><h3 style='color: #CC0000'>v0.004</h3><br>
+		- Added an Alligator upgrade, milestone, and buyable.<br>
+		- Balanced until 1e1160 Points (squared!).<br>
+		- Made new achievement rows work properly.<br>
+		- Added a custom save.<br>
+	<br><h3 style='color: #CC0000'>v0.003</h3><br>
 		- Balanced until 1e580 Points.<br>
 		- Added three Alligator upgrades, two Alligator milestones, and three Alligator buyables.<br>
 	<br><h3 style='color: #CC0000'>v0.002</h3><br>
