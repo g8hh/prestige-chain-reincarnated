@@ -215,6 +215,7 @@ Function order:
 - buyMaximumBuyable
 - getBuyableAmountDisplay (calcs it)
 - getBuyableDisplay (calcs it)
+- canBuySimultaniously
 */
 
 var CURRENT_BUYABLE_EXTRAS = {}
@@ -404,7 +405,7 @@ function getAlwaysActiveAdditionalBuyables(layer, id){
 
 function getBuyableExtraText(layer, id){
         // Fully general
-        let a = "<b><h2>Extra levels from</h2>:<br>"
+        let a = "<b><h3>Extra levels from:</h3><br>"
         let extra = false
         let key = layer + id
         let data = MAIN_BUYABLE_DATA[key] || {}
@@ -579,8 +580,8 @@ function buyManualBuyable(layer, id){
         let cost = getBuyableCost(layer, id)
         if (!canAffordBuyable(layer, id, cost)) return
         player[layer].buyables[id] = player[layer].buyables[id].plus(1)
-        if (isBuyableFree(layer)) return
-        player[layer].points = player[layer].points.minus(cost)
+        if (!isBuyableFree(layer)) player[layer].points = player[layer].points.minus(cost)
+        return true
 }
 
 function buyMaximumBuyable(layer, id, maximum){
@@ -609,9 +610,10 @@ function buyMaximumBuyable(layer, id, maximum){
                                 
         player[layer].buyables[id] = player[layer].buyables[id].plus(diff)
 
-        if (isBuyableFree(layer) || diff.eq(0)) return 
+        if (isBuyableFree(layer) || diff.eq(0)) return true
         pts = pts.sub(getBuyableCost(layer, id, -1)).max(0)
         //max 0 so nothing goes horribly wrong with weird errors and stuffs
+        return true
 }
 
 function getBuyableAmountDisplay(layer, id){
@@ -642,10 +644,10 @@ function getBuyableDisplay(layer, id){
                 eformula = format(getBuyableBase(layer, id), 4) + getBuyableEffectString(layer, id)
                 if (MAIN_BUYABLE_DATA[layer + id].func == "linp1") eformula = "1+"+eformula
         }
-        let allEff = "<b><h2>Effect formula</h2>:<br>" + eformula + "</b><br>"
+        let allEff = "<b><h2>Effect formula:</h2><br>" + eformula + "</b><br>"
 
         let bases = getBuyableBases(layer, id)
-        let cost1 = "<b><h2>Cost formula</h2>:<br>"
+        let cost1 = "<b><h2>Cost formula:</h2><br>"
         let cost3 = "</b><br>"
         let cost2a = bases[0].eq(1) ? "" :  "" + formatBuyableCostBase(bases[0]) + ""
         let cost2b = bases[1].eq(1) ? "" : "*" + formatBuyableCostBase(bases[1]) + "<sup>x</sup>"
@@ -687,10 +689,10 @@ function getGeneralizedBuyableData(layer, id, unlockedTF){
                 return calcBuyableExtra(layer, id)
         }
         let buy = function(){
-                buyManualBuyable(layer, id)
+                return buyManualBuyable(layer, id)
         }
         let buyMax = function(maximum){
-                buyMaximumBuyable(layer, id, maximum)
+                return buyMaximumBuyable(layer, id, maximum)
         }
         return {
                 title: title, 
@@ -704,8 +706,6 @@ function getGeneralizedBuyableData(layer, id, unlockedTF){
                 unlocked: unlockedTF,
                 }
 }
-
-// GENERAL BUYABLE SUPPORT
 
 function isBuyableActive(layer, thang){
         if (layer == "o") return true
@@ -729,22 +729,6 @@ function isBuyableActive(layer, thang){
 
 function getABBulk(layer){
         let amt = decimalOne
-        if (layer == "a") {
-        }
-        if (layer == "b") {
-        }
-        if (layer == "c"){
-        }
-        if (layer == "d"){
-        }
-        if (layer == "e"){
-        }
-        if (layer == "f"){
-        }
-        if (layer == "g"){
-        }
-        if (layer == "h"){
-        }
         return amt
 }
 
@@ -753,26 +737,13 @@ function getABSpeed(layer){
         return diffmult
 }
 
+function canBuySimultaniously(layer){
+        if (layer == "a") return false
+        return false
+}
+
 function getMaxBuyablesAmount(layer){
         let ret = Decimal.pow(10, 20)
-        if (layer == "a") {
-        }
-        if (layer == "b") {
-        }
-        if (layer == "c") {
-        }
-        if (layer == "d") {
-        }
-        if (layer == "e") {
-        }
-        if (layer == "f") {
-        }
-        if (layer == "g") {
-        }
-        if (layer == "h"){
-        }
-        if (layer == "i"){
-        }
         return ret
 }
 
@@ -783,15 +754,17 @@ function handleGeneralizedBuyableAutobuy(diff, layer){
         if (player[layer].abtime > 1) {
                 player[layer].abtime += -1
                 let amt = getABBulk(layer)
-                if (tmp[layer].buyables[11] && tmp[layer].buyables[11].unlocked) layers[layer].buyables[11].buyMax(amt)
-                if (tmp[layer].buyables[12] && tmp[layer].buyables[12].unlocked) layers[layer].buyables[12].buyMax(amt)
-                if (tmp[layer].buyables[13] && tmp[layer].buyables[13].unlocked) layers[layer].buyables[13].buyMax(amt)
-                if (tmp[layer].buyables[21] && tmp[layer].buyables[21].unlocked) layers[layer].buyables[21].buyMax(amt)
-                if (tmp[layer].buyables[22] && tmp[layer].buyables[22].unlocked) layers[layer].buyables[22].buyMax(amt)
-                if (tmp[layer].buyables[23] && tmp[layer].buyables[23].unlocked) layers[layer].buyables[23].buyMax(amt)
-                if (tmp[layer].buyables[31] && tmp[layer].buyables[31].unlocked) layers[layer].buyables[31].buyMax(amt)
-                if (tmp[layer].buyables[32] && tmp[layer].buyables[32].unlocked) layers[layer].buyables[32].buyMax(amt)
-                if (tmp[layer].buyables[33] && tmp[layer].buyables[33].unlocked) layers[layer].buyables[33].buyMax(amt)
+                let tlb = tmp[layer].buyables
+                let ids = [11, 12, 13, 21, 22, 23, 31, 32, 33]
+                let hasBoughtYet = false
+                let cbs = canBuySimultaniously(layer)
+                for (let i = 0; i < 9; i++) {
+                        let id = ids[i]
+                        if (tlb[id] && tlb[id].unlocked) {
+                                hasBoughtYet = hasBoughtYet || layers[layer].buyables[id].buyMax(amt)
+                        }
+                        if (hasBoughtYet && !cbs) break
+                }
         }
 }
 
