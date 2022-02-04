@@ -432,7 +432,7 @@ addLayer("a", {
                                 let i = "Sixth, \"per upgrade\" and \"per milestone\" refer to the number of upgrades or milestones in the layer that the upgrade, milestone, or buyable is in."
                                 let j = "Finally, you can click and drag to buy lots of upgrades at once!"
 
-                                return a + br2 + b + br2 + c + " " + d + br2 + e + br2 + f + br2 + g + br2 + h + br2 + i + br2 + j
+                                return a + br2 + b + br2 + c + br2 + d + br + e + br2 + f + br2 + g + br2 + h + br2 + i + br2 + j
                         },
                 },
         },
