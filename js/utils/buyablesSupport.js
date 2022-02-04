@@ -113,6 +113,7 @@ var MAIN_BUYABLE_DATA = {
                         let b1 = new Decimal(2)
                         let b2 = new Decimal(1.05)
                         if (hasUpgrade("a", 23)) b0 = decimalOne
+                        if (hasMilestone("a", 4)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -141,6 +142,21 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e84)
                         let b1 = new Decimal(10)
                         let b2 = new Decimal(1.2)
+                        return [b0, b1, b2]
+                },
+        },
+        a32: {
+                name: "A 31",
+                func: "linp1",
+                effects: "pre-exp Alligator gain",
+                effectSymbol: "*",
+                base: {
+                        initial: new Decimal(.2),
+                },
+                bases(){
+                        let b0 = new Decimal(1e138)
+                        let b1 = new Decimal(200)
+                        let b2 = new Decimal(1.5)
                         return [b0, b1, b2]
                 },
         },
@@ -208,6 +224,12 @@ var BUYABLES_FUNCTION_NAMES = {
         "lin": {
                 "func": BUYABLES_EFFECT_LINEAR,
                 "identity": decimalZero,
+                "string": "*x",
+                "eff": "+",
+        },
+        "linp1": {
+                "func": BUYABLES_EFFECT_LINEAR_PLUS1,
+                "identity": decimalOne,
                 "string": "*x",
                 "eff": "+",
         },
@@ -403,6 +425,10 @@ function BUYABLES_EFFECT_LINEAR(a,b){
         return a.times(b)
 }
 
+function BUYABLES_EFFECT_LINEAR_PLUS1(a,b){
+        return a.times(b).plus(1)
+}
+
 function BUYABLES_EFFECT_LINEAR_SQRT(a,b){
         return a.times(b.sqrt())
 }
@@ -475,7 +501,7 @@ function getIdentity(layer, id){
 }
 
 function reCalcBuyableEffect(layer, id){
-        // Softcap is not general, otherwise it is
+        // Fully general
         if (!isBuyableActive(layer, id)) return getIdentity(layer, id)
         let base = CURRENT_BUYABLE_BASES[layer + id]
         let amt = getBuyableTotal(layer, id)
@@ -526,6 +552,7 @@ function canAffordBuyable(layer, id, cost = undefined){
 
 function isBuyableFree(layer){
         // Spec function
+        if (hasMilestone("a", 4) && layer == "a") return true
         return false
 }
 
@@ -707,14 +734,6 @@ function getABBulk(layer){
 
 function getABSpeed(layer){
         let diffmult = 1 // times per second
-        if (layer == "a"){
-        }
-        if (layer == "b"){
-        }
-        if (layer == "c"){
-        }
-        if (layer == "d"){
-        }
         return diffmult
 }
 

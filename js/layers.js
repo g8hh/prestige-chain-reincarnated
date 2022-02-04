@@ -140,6 +140,8 @@ addLayer("a", {
         getGainMultPre(){
                 let ret = decimalOne
 
+                                                ret = ret.times(CURRENT_BUYABLE_EFFECTS["a32"])
+
                 return ret
         },
         getGainMultPost(){
@@ -331,10 +333,10 @@ addLayer("a", {
                         }),
                 31: getGeneralizedBuyableData("a", 31, function(){
                         return hasUpgrade("a", 22) //|| player.b.unlocked
-                        }),/*
+                        }),
                 32: getGeneralizedBuyableData("a", 32, function(){
                         return hasUpgrade("a", 23) //|| player.b.unlocked
-                        }),
+                        }),/*
                 33: getGeneralizedBuyableData("a", 33, function(){
                         return hasUpgrade("a", 23) //|| player.b.unlocked
                         }),
@@ -383,6 +385,20 @@ addLayer("a", {
                                 return "Reward: Remove the linear component of A 13's cost."
                         },
                 }, // hasMilestone("a", 3)
+                4: {
+                        requirementDescription(){
+                                return "1e1375 Points"
+                        },
+                        done(){
+                                return player.points.gte("1e1375")
+                        },
+                        unlocked(){
+                                return hasMilestone("a", 3)
+                        },
+                        effectDescription(){
+                                return "Reward: Remove the linear component of A 22's cost and A buyables cost nothing."
+                        },
+                }, // hasMilestone("a", 4)
         },
         tabFormat: {
                 "Upgrades": {

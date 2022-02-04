@@ -24,7 +24,7 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.points.gte("1e1160")
+	return player.points.gte("1e1850")
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -36,6 +36,9 @@ let changelog = `<h1>Changelog:</h1><br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.004</h3><br>
+		- Added an Alligator milestone and buyable.<br>
+		- Balanced until 1e1850 Points.<br>
 	<br><h3 style='color: #CC0000'>v0.004</h3><br>
 		- Added an Alligator upgrade, milestone, and buyable.<br>
 		- Balanced until 1e1160 Points (squared!).<br>
