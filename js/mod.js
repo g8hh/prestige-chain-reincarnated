@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.005",
+	num: "0.006",
 	name: "Respecced Reincarnation",
 }
 
@@ -24,18 +24,28 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.points.gte("1e1850")
+	return player.b.times >= 3
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<br><h2 style='color: #DDDD00'>Endgame:</h2><br>
-		Reaching the endgame screen (updated at least as of v0.005)<br><br>
+		Reaching the endgame screen (updated at least as of v0.006)<br><br>
 	<br><h2 style='color: #00CC00'>Notes</h2><br>
 		- Versions will be vA.B.C<br>
 		- A will be big releases.<br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.006</h3><br>
+		- Added an Alligator buyable.<br>
+		- Added an Alligator upgrade.<br>
+		- Added Beaver, a new layer!<br>
+		- Added two Beaver milestones.<br>
+		- Added hotkeys for moving to and resetting A/B.<br>
+		- Added a custom save.<br>
+		- Various code cleanup and bugfixes.<br>
+		- Added an Infobox to Alligator upgrades, <i>read it</i>.<br>
+		- Balanced until 3 Beaver resets.<br>
 	<br><h3 style='color: #CC0000'>v0.005</h3><br>
 		- Added an Alligator milestone and buyable.<br>
 		- Balanced until 1e1850 Points.<br>

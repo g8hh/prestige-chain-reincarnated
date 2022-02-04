@@ -28,6 +28,7 @@ var MAIN_BUYABLE_DATA = {
                         if (hasUpgrade("a", 22)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
+                a13: {active:() => hasMilestone("b", 1)},
         },
         a12: {
                 name: "A 12",
@@ -128,6 +129,8 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e55)
                         let b1 = new Decimal(6)
                         let b2 = new Decimal(1.1)
+                        if (hasUpgrade("a", 24)) b0 = decimalOne
+                        if (hasMilestone("b", 2)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -146,7 +149,7 @@ var MAIN_BUYABLE_DATA = {
                 },
         },
         a32: {
-                name: "A 31",
+                name: "A 32",
                 func: "linp1",
                 effects: "pre-exp Alligator gain",
                 effectSymbol: "*",
@@ -157,6 +160,21 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e138)
                         let b1 = new Decimal(200)
                         let b2 = new Decimal(1.5)
+                        return [b0, b1, b2]
+                },
+        },
+        a33: {
+                name: "A 33",
+                func: "exp",
+                effects: "Alligators per upgrade",
+                effectSymbol: "*",
+                base: {
+                        initial: new Decimal(1.2),
+                },
+                bases(){
+                        let b0 = new Decimal(1e214)
+                        let b1 = new Decimal(5e12)
+                        let b2 = new Decimal(2)
                         return [b0, b1, b2]
                 },
         },
@@ -605,9 +623,6 @@ function getBuyableAmountDisplay(layer, id){
 
 function getBuyableDisplay(layer, id){
         // other than softcapping fully general
-        if (player.tab != layer) return ""
-        if (player.subtabs[layer].mainTabs != "Buyables") return ""
-        //if we arent on the tab, then we dont care :) (makes it faster)
         if (!shiftDown) {
                 let amt = "<b><h2>Amount</h2>: " + getBuyableAmountDisplay(layer, id) + "</b><br>"
                 let eff1 = "<b><h2>Effect</h2>: " + getBuyableEffectSymbol(layer, id) 
@@ -622,9 +637,10 @@ function getBuyableDisplay(layer, id){
         if (MAIN_BUYABLE_DATA[layer + id]["eFormula"] != undefined) {
                 eformula = MAIN_BUYABLE_DATA[layer + id]["eFormula"]
                 if (typeof eformula == "function") eformula = eformula()
-                eformula = replaceString(eformula, "[base]", format(getBuyableBase(layer, id), 4))
+                eformula = eformula.replace("[base]", format(getBuyableBase(layer, id), 4))
         } else {
                 eformula = format(getBuyableBase(layer, id), 4) + getBuyableEffectString(layer, id)
+                if (MAIN_BUYABLE_DATA[layer + id].func == "linp1") eformula = "1+"+eformula
         }
         let allEff = "<b><h2>Effect formula</h2>:<br>" + eformula + "</b><br>"
 

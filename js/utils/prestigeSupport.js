@@ -123,13 +123,13 @@ function getGeneralizedPrestigeButtonText(layer, forceFormula = false){
         let div = tmp[layer].getBaseDiv
 
         if (player.shiftAlias || forceFormula) {
-                let ret = "(log10(PTS/DIV)*PRE)<sup>EXP</sup>*PSTEND"
+                let ret = "(log10(PTS/<wbr>DIV)<wbr>*PRE)<sup>EXP</sup><wbr>*PSTEND"
                 ret = ret.replace("PTS", layers[layer].baseResource)
                 ret = ret.replace("DIV", format(div))
                 ret = ret.replace("PRE", format(pre))
                 ret = ret.replace("PST", format(pst))
                 ret = ret.replace("EXP", format(exp))
-                ret = ret.replace("/1.00)", ")") // if div == 1
+                ret = ret.replace("/<wbr>1.00)", ")") // if div == 1
                 ret = ret.replace("*1.00)", ")") // if pre == 1
                 ret = ret.replace("<sup>1.00</sup>", "") // if exp == 1
                 ret = ret.replace("*1.00END", "") // if pst == 1
