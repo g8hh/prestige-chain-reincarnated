@@ -190,7 +190,7 @@ addLayer("a", {
                                 data.times ++
                         }
                 }
-                if (false) {
+                if (hasMilestone("b", 3)) {
                         handleGeneralizedBuyableAutobuy(diff, "a")
                 } else {
                         data.abtime = 0
@@ -326,6 +326,18 @@ addLayer("a", {
                                 return hasUpgrade("a", 23) || player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 24)
+                25: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A--i-ator"
+                        },
+                        description(){
+                                return "Remove A 21's base cost and per upgrade add .01 to A 13's base"
+                        },
+                        cost: new Decimal("1e636"),
+                        unlocked(){
+                                return hasUpgrade("b", 12) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("a", 25)
         },
         buyables: {
                 rows: 3,
@@ -628,14 +640,27 @@ addLayer("b", {
                                 return "<bdi style='color: #" + getUndulatingColor() + "'>B-aver"
                         },
                         description(){
-                                let a = "Idk yet"
+                                let a = "The Alligator autobuy speed is multiplied by 1 + Beaver resets"
                                 return a
                         },
-                        cost: new Decimal(2e100),
+                        cost: new Decimal(20),
                         unlocked(){
-                                return player.b.best.gt(0) //|| player.c.unlocked
+                                return hasMilestone("b", 3) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("b", 11)
+                12: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Be-ver"
+                        },
+                        description(){
+                                let a = "A 32 gives free A 22 levels and you can bulk 2x Alligator buyables"
+                                return a
+                        },
+                        cost: new Decimal(1000),
+                        unlocked(){
+                                return hasUpgrade("b", 11) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("b", 12)
         },
         buyables: {
                 rows: 3,
@@ -695,9 +720,37 @@ addLayer("b", {
                                 return true
                         },
                         effectDescription(){
-                                return "Reward: Per reset keep an Alligator upgrade and milestone and remove A23's linear cost component."
+                                return "Reward: Per reset keep an Alligator upgrade and milestone and remove A 23's linear cost component."
                         },
                 }, // hasMilestone("b", 2)
+                3: {
+                        requirementDescription(){
+                                return "4 Beaver resets"
+                        },
+                        done(){
+                                return player.b.times >= 4
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: Autobuy an Alligator buyable once per second and A 31 gives free A 23 levels."
+                        },
+                }, // hasMilestone("b", 3)
+                4: {
+                        requirementDescription(){
+                                return "8 Beaver resets"
+                        },
+                        done(){
+                                return player.b.times >= 8
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: The Alligator autobuyer triggers on every buyable per activation and A 32 gives free A 12 levels."
+                        },
+                }, // hasMilestone("b", 4)
         },
         tabFormat: {
                 "Upgrades": {

@@ -51,8 +51,10 @@ var MAIN_BUYABLE_DATA = {
                         let b1 = new Decimal(1.3)
                         let b2 = new Decimal(1.003)
                         if (hasUpgrade("a", 21)) b0 = decimalOne
+                        if (hasUpgrade("b", 11)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
+                a32: {active:() => hasMilestone("b", 4)},
         },
         a13: {
                 name: "A 13",
@@ -67,6 +69,15 @@ var MAIN_BUYABLE_DATA = {
                                 type: "add",
                                 amount(){
                                         return new Decimal(.005)
+                                },
+                        },
+                        2: {
+                                active(){
+                                        return hasUpgrade("a", 25)
+                                },
+                                type: "add",
+                                amount(){
+                                        return new Decimal(.01).times(player.a.upgrades.length)
                                 },
                         },
                 },
@@ -99,6 +110,7 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(5e16)
                         let b1 = new Decimal(3)
                         let b2 = new Decimal(1.03)
+                        if (hasUpgrade("a", 25)) b0 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -117,6 +129,7 @@ var MAIN_BUYABLE_DATA = {
                         if (hasMilestone("a", 4)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
+                a32: {active:() => hasUpgrade("b", 12)},
         },
         a23: {
                 name: "A 23",
@@ -133,6 +146,7 @@ var MAIN_BUYABLE_DATA = {
                         if (hasMilestone("b", 2)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
+                a31: {active:() => hasMilestone("b", 3)},
         },
         a31: {
                 name: "A 31",
@@ -610,10 +624,10 @@ function buyMaximumBuyable(layer, id, maximum){
                                 
         player[layer].buyables[id] = player[layer].buyables[id].plus(diff)
 
-        if (isBuyableFree(layer) || diff.eq(0)) return true
+        if (isBuyableFree(layer) || diff.eq(0)) return diff.gt(0)
         pts = pts.sub(getBuyableCost(layer, id, -1)).max(0)
         //max 0 so nothing goes horribly wrong with weird errors and stuffs
-        return true
+        return diff.gt(0)
 }
 
 function getBuyableAmountDisplay(layer, id){
@@ -729,16 +743,22 @@ function isBuyableActive(layer, thang){
 
 function getABBulk(layer){
         let amt = decimalOne
+        if (layer == "a"){
+                if (hasUpgrade("b", 12)) amt = amt.times(2)
+        }
         return amt
 }
 
 function getABSpeed(layer){
         let diffmult = 1 // times per second
+        if (layer == "a") {
+                if (hasUpgrade("b", 11)) diffmult *= player.b.times + 1
+        }
         return diffmult
 }
 
 function canBuySimultaniously(layer){
-        if (layer == "a") return false
+        if (layer == "a") return hasMilestone("b", 4)
         return false
 }
 
@@ -761,7 +781,7 @@ function handleGeneralizedBuyableAutobuy(diff, layer){
                 for (let i = 0; i < 9; i++) {
                         let id = ids[i]
                         if (tlb[id] && tlb[id].unlocked) {
-                                hasBoughtYet = hasBoughtYet || layers[layer].buyables[id].buyMax(amt)
+                                hasBoughtYet = layers[layer].buyables[id].buyMax(amt) || hasBoughtYet
                         }
                         if (hasBoughtYet && !cbs) break
                 }
