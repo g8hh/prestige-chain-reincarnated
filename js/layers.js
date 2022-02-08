@@ -35,7 +35,7 @@ function getPointExponentiation(){
         if (hasMilestone("a", 2)) {
                 let base = 1.01
                 if (player.b.times > 0 /*|| player.c.unlocked*/) base = 1.03
-                                        ret = ret.times(Decimal.pow(1.01, player.a.milestones.length))
+                                        ret = ret.times(Decimal.pow(base, player.a.milestones.length))
         }
         
         return ret
@@ -367,7 +367,7 @@ addLayer("a", {
                         return hasUpgrade("a", 23) || player.b.unlocked
                         }),
                 33: getGeneralizedBuyableData("a", 33, function(){
-                        return hasUpgrade("a", 23) || player.b.unlocked
+                        return hasUpgrade("a", 24) || player.b.unlocked
                         }),
         },
         milestones: {
@@ -624,7 +624,7 @@ addLayer("b", {
                 }
                 data.time += diff
         },
-        layerShown(){return true},
+        layerShown(){return hasUpgrade("a", 24)},
         prestigeButtonText(){
                 if (isPassiveGainActive("b")) return ""
                 return getGeneralizedPrestigeButtonText("b")
