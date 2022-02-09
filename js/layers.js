@@ -338,6 +338,18 @@ addLayer("a", {
                                 return hasUpgrade("b", 12) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("a", 25)
+                31: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A--i-ator"
+                        },
+                        description(){
+                                return "Remove A 21's linear exponential cost component and A 23 gives free A 22 levels"
+                        },
+                        cost: new Decimal("1e705"),
+                        unlocked(){
+                                return player.b.best.gte(1e4) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("a", 31)
         },
         buyables: {
                 rows: 3,
@@ -582,6 +594,8 @@ addLayer("b", {
         getGainMultPost(){
                 let ret = getGeneralizedInitialPostMult("b")
 
+                if (hasUpgrade("b", 13))        ret = ret.times(Decimal.pow(2, player.b.upgrades.length))
+
                 return ret
         },
         effect(){
@@ -653,7 +667,7 @@ addLayer("b", {
                                 return "<bdi style='color: #" + getUndulatingColor() + "'>Be-ver"
                         },
                         description(){
-                                let a = "A 32 gives free A 22 levels and you can bulk 2x Alligator buyables"
+                                let a = "A 32 gives free A 22 levels and you can bulk [upgrades]x Alligator buyables"
                                 return a
                         },
                         cost: new Decimal(1000),
@@ -661,6 +675,19 @@ addLayer("b", {
                                 return hasUpgrade("b", 11) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("b", 12)
+                13: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>B--ver"
+                        },
+                        description(){
+                                let a = "Per upgrade double Beaver gain and A 22 gives free A 13 and A 11 levels"
+                                return a
+                        },
+                        cost: new Decimal(2000),
+                        unlocked(){
+                                return hasUpgrade("a", 25) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("b", 13)
         },
         buyables: {
                 rows: 3,

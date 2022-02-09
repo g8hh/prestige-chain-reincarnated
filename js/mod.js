@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.007.1",
+	num: "0.008",
 	name: "Respecced Reincarnation",
 }
 
@@ -24,7 +24,7 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.b.times >= 20
+	return player.a.points.gte("1e819")
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -36,6 +36,10 @@ let changelog = `<h1>Changelog:</h1><br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.008</h3><br>
+		- Balanced until 1e819 Alligators.<br>
+		- Added a Alligator and a Beaver upgrade.<br>
+		- Various code clean up, particularly around generalized buyables.<br>
 	<br><h3 style='color: #CC0000'>v0.007.1</h3><br>
 		- Added five rows of achievements.<br>
 	<br><h3 style='color: #CC0000'>v0.007</h3><br>
