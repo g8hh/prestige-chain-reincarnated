@@ -42,6 +42,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- Various code clean up, particularly around generalized buyables.<br>
 	<br><h3 style='color: #CC0000'>v0.007.1</h3><br>
 		- Added five rows of achievements.<br>
+		- Made early Alligator upgrades unlock with the previous.<br>
 	<br><h3 style='color: #CC0000'>v0.007</h3><br>
 		- Added two Beaver milestones.<br>
 		- Added two Beaver upgrades.<br>
