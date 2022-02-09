@@ -251,7 +251,7 @@ addLayer("a", {
                         },
                         cost: new Decimal(500),
                         unlocked(){
-                                return player.a.best.gt(1000) || player.a.buyables[11].gte(12) || player.b.unlocked
+                                return hasUpgrade("a", 12) || player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 13)
                 14: {
@@ -263,7 +263,7 @@ addLayer("a", {
                         },
                         cost: new Decimal(3e10),
                         unlocked(){
-                                return player.a.best.gt(1e11) || player.a.buyables[12].gte(44) || player.b.unlocked
+                                return hasUpgrade("a", 13) || player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 14)
                 15: {
@@ -275,7 +275,7 @@ addLayer("a", {
                         },
                         cost: new Decimal(1e20),
                         unlocked(){
-                                return player.a.best.gt(1e11) || player.a.buyables[12].gte(80) || player.b.unlocked
+                                return hasUpgrade("a", 14) || player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 15)
                 21: {
@@ -287,7 +287,7 @@ addLayer("a", {
                         },
                         cost: new Decimal(1e40),
                         unlocked(){
-                                return player.a.best.gt(1e42) || player.a.buyables[12].gte(132) || player.b.unlocked
+                                return hasUpgrade("a", 15) || player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 21)
                 22: {
@@ -299,7 +299,7 @@ addLayer("a", {
                         },
                         cost: new Decimal(1e70),
                         unlocked(){
-                                return player.a.best.gt(1e72) || player.a.buyables[12].gte(192) || player.b.unlocked
+                                return hasUpgrade("a", 21) || player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 22)
                 23: {
@@ -311,7 +311,7 @@ addLayer("a", {
                         },
                         cost: new Decimal(1e119),
                         unlocked(){
-                                return player.a.best.gt(1e123) || player.a.buyables[12].gte(261) || player.b.unlocked
+                                return hasUpgrade("a", 22) || player.b.unlocked
                         }, 
                 }, // hasUpgrade("a", 23)
                 24: {
