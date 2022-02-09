@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.007",
+	num: "0.007.1",
 	name: "Respecced Reincarnation",
 }
 
@@ -36,6 +36,8 @@ let changelog = `<h1>Changelog:</h1><br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.007.1</h3><br>
+		- Added five rows of achievements.<br>
 	<br><h3 style='color: #CC0000'>v0.007</h3><br>
 		- Added two Beaver milestones.<br>
 		- Added two Beaver upgrades.<br>
