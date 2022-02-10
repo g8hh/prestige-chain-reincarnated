@@ -638,7 +638,7 @@ addLayer("b", {
                 }
                 data.time += diff
         },
-        layerShown(){return hasUpgrade("a", 24)},
+        layerShown(){return hasUpgrade("a", 24) || player.b.unlocked},
         prestigeButtonText(){
                 if (isPassiveGainActive("b")) return ""
                 return getGeneralizedPrestigeButtonText("b")
