@@ -132,8 +132,9 @@ var MAIN_BUYABLE_DATA = {
                         if (hasMilestone("a", 4)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
-                a32: {active:() => hasUpgrade("b", 12)},
                 a23: {active:() => hasUpgrade("a", 31)},
+                a31: {active:() => hasUpgrade("b", 14)},
+                a32: {active:() => hasUpgrade("b", 12)},
         },
         a23: {
                 name: "A 23",
@@ -173,6 +174,15 @@ var MAIN_BUYABLE_DATA = {
                 effectSymbol: "*",
                 base: {
                         initial: new Decimal(.2),
+                        1: {
+                                active(){
+                                        return hasUpgrade("b", 14)
+                                },
+                                type: "add",
+                                amount(){
+                                        return new Decimal(player.b.upgrades.length).div(5)
+                                }
+                        }
                 },
                 bases(){
                         let b0 = new Decimal(1e138)

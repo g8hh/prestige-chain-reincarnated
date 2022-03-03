@@ -33,9 +33,22 @@ function isPassiveGainActive(layer){
         if (layer == "e") return false
         if (layer == "d") return false
         if (layer == "c") return false
-        if (layer == "b") return false
+        if (layer == "b") return hasUpgrade("a", 32)
         if (layer == "a") return hasUpgrade("a", 14)
         console.log("issue")
+}
+
+function doPassiveGain(layer, diff){
+        if (!isPassiveGainActive(layer)) return 
+        let data = player[layer]
+        data.points = data.points.plus(tmp[layer].getResetGain.times(diff))
+        data.total   = data.total.plus(tmp[layer].getResetGain.times(diff))
+        data.autotimes += diff
+        if (data.autotimes > 10) data.autotimes = 10
+        if (data.autotimes > 1) {
+                data.autotimes += -1
+                data.times ++
+        }
 }
 
 function isPrestigeEffectActive(layer){

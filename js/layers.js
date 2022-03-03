@@ -180,16 +180,8 @@ addLayer("a", {
                 if (tmp.a.getResetGain.gt(0)) data.unlocked = true
 
                 data.best = data.best.max(data.points)
-                if (isPassiveGainActive("a")) {
-                        data.points = data.points.plus(tmp.a.getResetGain.times(diff))
-                        data.total   = data.total.plus(tmp.a.getResetGain.times(diff))
-                        data.autotimes += diff
-                        if (data.autotimes > 10) data.autotimes = 10
-                        if (data.autotimes > 1) {
-                                data.autotimes += -1
-                                data.times ++
-                        }
-                }
+                doPassiveGain("a", diff)
+                
                 if (hasMilestone("b", 3)) {
                         handleGeneralizedBuyableAutobuy(diff, "a")
                 } else {
@@ -350,6 +342,18 @@ addLayer("a", {
                                 return player.b.best.gte(1e4) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("a", 31)
+                32: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>All--ator"
+                        },
+                        description(){
+                                return "You can 100% of Beavers upon reset per second and add 1 to its effect exponent"
+                        },
+                        cost: new Decimal("1e819"),
+                        unlocked(){
+                                return hasUpgrade("a", 31) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("a", 32)
         },
         buyables: {
                 rows: 3,
@@ -604,6 +608,7 @@ addLayer("b", {
                 let amt = player.b.points
 
                 let exp = new Decimal(1)
+                if (hasUpgrade("a", 32)) exp = exp.plus(1)
 
                 let ret = amt.times(4).plus(1).pow(exp)
 
@@ -621,16 +626,8 @@ addLayer("b", {
                 if (tmp.b.getResetGain.gt(0)) data.unlocked = true
 
                 data.best = data.best.max(data.points)
-                if (isPassiveGainActive("b")) {
-                        data.points = data.points.plus(tmp.a.getResetGain.times(diff))
-                        data.total   = data.total.plus(tmp.a.getResetGain.times(diff))
-                        data.autotimes += diff
-                        if (data.autotimes > 10) data.autotimes = 10
-                        if (data.autotimes > 1) {
-                                data.autotimes += -1
-                                data.times ++
-                        }
-                }
+                doPassiveGain("b", diff)
+                
                 if (false) {
                         handleGeneralizedBuyableAutobuy(diff, "b")
                 } else {
@@ -688,6 +685,19 @@ addLayer("b", {
                                 return hasUpgrade("a", 25) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("b", 13)
+                14: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Bea-er"
+                        },
+                        description(){
+                                let a = "Per upgrade add .2 to A 32's base and A 31 gives free A 22 levels"
+                                return a
+                        },
+                        cost: new Decimal(1e6),
+                        unlocked(){
+                                return hasUpgrade("a", 32) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("b", 14)
         },
         buyables: {
                 rows: 3,
