@@ -37,7 +37,7 @@ let changelog = `<h1>Changelog:</h1><br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
 	<br><h3 style='color: #CC0000'>v0.009</h3><br>
-		- Balanced until 1e819 Alligators.<br>
+		- Balanced until 1e941 Alligators.<br>
 		- Added a Alligator and a Beaver upgrade.<br>
 		- Added a custom save.<br>
 	<br><h3 style='color: #CC0000'>v0.008</h3><br>
