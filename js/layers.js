@@ -347,7 +347,7 @@ addLayer("a", {
                                 return "<bdi style='color: #" + getUndulatingColor() + "'>All--ator"
                         },
                         description(){
-                                return "You can 100% of Beavers upon reset per second and add 1 to its effect exponent"
+                                return "You get 100% of Beavers upon reset per second and add 1 to its effect exponent"
                         },
                         cost: new Decimal("1e819"),
                         unlocked(){
