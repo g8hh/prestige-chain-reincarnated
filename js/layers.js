@@ -997,12 +997,12 @@ addLayer("ach", {
                 },
                 {key: "shift+A", description: "Shift+A: Go to Alligator", 
                         onPress(){
-                                player.tab = "a"
+                                if (player.a.unlocked) player.tab = "a"
                         }
                 },
                 {key: "shift+B", description: "Shift+B: Go to Beaver", 
                         onPress(){
-                                player.tab = "b"
+                                if (player.b.unlocked) player.tab = "b"
                         }
                 },
                 {
@@ -1017,12 +1017,12 @@ addLayer("ach", {
                 },
                 {key: "a", description: "A: Go to Alligators",
                         onPress(){
-                                doReset("a")
+                                if (canReset("a")) doReset("a")
                         }
                 },
                 {key: "b", description: "B: Reset for Beavers",
                         onPress(){
-                                doReset("b")
+                                if (canReset("b")) doReset("b")
                         }
                 },
                 {
