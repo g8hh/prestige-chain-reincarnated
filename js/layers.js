@@ -354,6 +354,18 @@ addLayer("a", {
                                 return hasUpgrade("a", 31) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("a", 32)
+                33: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>A-l--ator"
+                        },
+                        description(){
+                                return "<bdi style='font-size: 80%'>Per upgrade upgrades/10 multiplies Beaver gain and All--ator adds to Beaver upgrade per this row upgrade</bdi>"
+                        },
+                        cost: new Decimal("1e942"),
+                        unlocked(){
+                                return hasUpgrade("a", 32) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("a", 33)
         },
         buyables: {
                 rows: 3,
@@ -599,6 +611,7 @@ addLayer("b", {
                 let ret = getGeneralizedInitialPostMult("b")
 
                 if (hasUpgrade("b", 13))        ret = ret.times(Decimal.pow(2, player.b.upgrades.length))
+                if (hasUpgrade("a", 33))        ret = ret.times(Decimal.pow(player.a.upgrades.length/10, player.a.upgrades.length).max(1))
 
                 return ret
         },
@@ -608,7 +621,7 @@ addLayer("b", {
                 let amt = player.b.points
 
                 let exp = new Decimal(1)
-                if (hasUpgrade("a", 32)) exp = exp.plus(1)
+                if (hasUpgrade("a", 32)) exp = exp.plus(hasUpgrade("a", 33) ? player.a.upgrades.filter(x => x < 40 && x > 30).length : 1)
 
                 let ret = amt.times(4).plus(1).pow(exp)
 
@@ -698,6 +711,19 @@ addLayer("b", {
                                 return hasUpgrade("a", 32) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("b", 14)
+                15: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>B-a-er"
+                        },
+                        description(){
+                                let a = "A 32 gives free A 21 and A 13 levels and unlock Beaver buyables [not yet]"
+                                return a
+                        },
+                        cost: new Decimal(6e7),
+                        unlocked(){
+                                return hasUpgrade("a", 33) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("b", 15)
         },
         buyables: {
                 rows: 3,

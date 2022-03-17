@@ -91,6 +91,7 @@ var MAIN_BUYABLE_DATA = {
                         return [b0, b1, b2]
                 },
                 a22: {active:() => hasUpgrade("b", 13)},
+                a32: {active:() => hasUpgrade("b", 15)},
         },
         a21: {
                 name: "A 21",
@@ -116,6 +117,7 @@ var MAIN_BUYABLE_DATA = {
                         if (hasUpgrade("a", 31)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
+                a32: {active:() => hasUpgrade("b", 15)},
         },
         a22: {
                 name: "A 22",
