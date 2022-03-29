@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.010",
+	num: "0.011",
 	name: "Respecced Reincarnation",
 }
 
@@ -24,7 +24,7 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.a.points.gte("1e941")
+	return player.b.points.gte("1e13")
 }
 
 let changelog = `<h1>Changelog:</h1><br>
@@ -36,6 +36,10 @@ let changelog = `<h1>Changelog:</h1><br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.011</h3><br>
+		- Balanced until 1e13 Beavers.<br>
+		- Added two Beaver buyables and a Alligator upgrade.<br>
+		- Added a Beaver milestone.<br>
 	<br><h3 style='color: #CC0000'>v0.010</h3><br>
 		- Balanced until 2e8 Beavers.<br>
 		- Added an Alligator and a Beaver upgrade.<br>

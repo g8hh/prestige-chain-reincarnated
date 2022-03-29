@@ -153,6 +153,7 @@ addLayer("a", {
 
                                                 ret = ret.times(CURRENT_BUYABLE_EFFECTS["a12"])
                                                 ret = ret.times(CURRENT_BUYABLE_EFFECTS["a33"].pow(player.a.upgrades.length))
+                                                ret = ret.times(CURRENT_BUYABLE_EFFECTS["b12"])
 
                 return ret
         },
@@ -366,6 +367,18 @@ addLayer("a", {
                                 return hasUpgrade("a", 32) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("a", 33)
+                34: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Al---ator"
+                        },
+                        description(){
+                                return "B 12 gives free A 32 levels and add .5 to the Beaver gain exponent"
+                        },
+                        cost: new Decimal("1e2048"),
+                        unlocked(){
+                                return hasUpgrade("b", 15) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("a", 34)
         },
         buyables: {
                 rows: 3,
@@ -600,6 +613,8 @@ addLayer("b", {
         getGainExp(){
                 let ret = new Decimal(2)
 
+                if (hasUpgrade("a", 34)) ret = ret.plus(.5)
+
                 return ret
         },
         getGainMultPre(){
@@ -612,6 +627,7 @@ addLayer("b", {
 
                 if (hasUpgrade("b", 13))        ret = ret.times(Decimal.pow(2, player.b.upgrades.length))
                 if (hasUpgrade("a", 33))        ret = ret.times(Decimal.pow(player.a.upgrades.length/10, player.a.upgrades.length).max(1))
+                                                ret = ret.times(CURRENT_BUYABLE_EFFECTS["b11"])
 
                 return ret
         },
@@ -716,7 +732,7 @@ addLayer("b", {
                                 return "<bdi style='color: #" + getUndulatingColor() + "'>B-a-er"
                         },
                         description(){
-                                let a = "A 32 gives free A 21 and A 13 levels and unlock Beaver buyables [not yet]"
+                                let a = "A 32 gives free A 21 and A 13 levels and unlock Beaver buyables"
                                 return a
                         },
                         cost: new Decimal(6e7),
@@ -728,32 +744,31 @@ addLayer("b", {
         buyables: {
                 rows: 3,
                 cols: 3,
-                /*
                 11: getGeneralizedBuyableData("b", 11, function(){
-                        return hasUpgrade("a", 12) //|| player.b.unlocked
-                        }),
+                        return hasUpgrade("b", 15) //|| player.c.unlocked
+                        }),      
                 12: getGeneralizedBuyableData("b", 12, function(){
-                        return hasUpgrade("a", 12) //|| player.b.unlocked
+                        return hasMilestone("b", 5) //|| player.b.unlocked
                         }),
-                13: getGeneralizedBuyableData("b", 13, function(){
+                /*13: getGeneralizedBuyableData("b", 13, function(){
                         return hasUpgrade("a", 13) //|| player.b.unlocked
                         }),
-                21: getGeneralizedBuyableData("b", 21, function(){
+                /*21: getGeneralizedBuyableData("b", 21, function(){
                         return hasUpgrade("a", 14) //|| player.b.unlocked
                         }),
-                22: getGeneralizedBuyableData("b", 22, function(){
+                /*22: getGeneralizedBuyableData("b", 22, function(){
                         return hasUpgrade("a", 15) //|| player.b.unlocked
                         }),
-                23: getGeneralizedBuyableData("b", 23, function(){
+                /*23: getGeneralizedBuyableData("b", 23, function(){
                         return hasUpgrade("a", 21) //|| player.b.unlocked
                         }),
-                31: getGeneralizedBuyableData("b", 31, function(){
+                /*31: getGeneralizedBuyableData("b", 31, function(){
                         return hasUpgrade("a", 22) //|| player.b.unlocked
                         }),
-                32: getGeneralizedBuyableData("b", 32, function(){
+                /*32: getGeneralizedBuyableData("b", 32, function(){
                         return hasUpgrade("a", 23) //|| player.b.unlocked
                         }),
-                33: getGeneralizedBuyableData("b", 33, function(){
+                /*33: getGeneralizedBuyableData("b", 33, function(){
                         return hasUpgrade("a", 23) //|| player.b.unlocked
                         }),/**/
         },
@@ -814,6 +829,20 @@ addLayer("b", {
                                 return "Reward: The Alligator autobuyer triggers on every buyable per activation and A 32 gives free A 12 levels."
                         },
                 }, // hasMilestone("b", 4)
+                5: {
+                        requirementDescription(){
+                                return "500,000,000 Beavers"
+                        },
+                        done(){
+                                return player.b.points.gte(5e8)
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: A 32 gives free A 31 levels and unlock another buyable."
+                        },
+                }, // hasMilestone("b", 5)
         },
         tabFormat: {
                 "Upgrades": {
@@ -849,7 +878,7 @@ addLayer("b", {
                                 ],
                                 "buyables"],
                         unlocked(){
-                                return false //|| player.c.unlocked
+                                return hasUpgrade("b", 15) //|| player.c.unlocked
                         },
                 },
                 "Milestones": {

@@ -168,12 +168,12 @@ var MAIN_BUYABLE_DATA = {
                         let b2 = new Decimal(1.2)
                         return [b0, b1, b2]
                 },
+                a32: {active:() => hasMilestone("b", 5)},
         },
         a32: {
                 name: "A 32",
                 func: "linp1",
                 effects: "pre-exp Alligator gain",
-                effectSymbol: "*",
                 base: {
                         initial: new Decimal(.2),
                         1: {
@@ -192,12 +192,12 @@ var MAIN_BUYABLE_DATA = {
                         let b2 = new Decimal(1.5)
                         return [b0, b1, b2]
                 },
+                b12: {active:() => hasUpgrade("a", 34)},
         },
         a33: {
                 name: "A 33",
                 func: "exp",
                 effects: "Alligators per upgrade",
-                effectSymbol: "*",
                 base: {
                         initial: new Decimal(1.2),
                 },
@@ -205,6 +205,34 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e214)
                         let b1 = new Decimal(5e12)
                         let b2 = new Decimal(2)
+                        return [b0, b1, b2]
+                },
+        },
+        b11: {
+                name: "B 11",
+                func: "exp",
+                effects: "Beavers",
+                base: {
+                        initial: new Decimal(1.4),
+                },
+                bases(){
+                        let b0 = new Decimal(1e8)
+                        let b1 = new Decimal(1.5)
+                        let b2 = new Decimal(1.01)
+                        return [b0, b1, b2]
+                },
+        },
+        b12: {
+                name: "B 12",
+                func: "exp",
+                effects: "Alligators",
+                base: {
+                        initial: new Decimal(1e10),
+                },
+                bases(){
+                        let b0 = new Decimal(2e8)
+                        let b1 = new Decimal(1)
+                        let b2 = new Decimal(1.02)
                         return [b0, b1, b2]
                 },
         },
