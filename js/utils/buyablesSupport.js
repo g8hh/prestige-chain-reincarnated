@@ -56,6 +56,8 @@ var MAIN_BUYABLE_DATA = {
                         return [b0, b1, b2]
                 },
                 a32: {active:() => hasMilestone("b", 4)},
+                a21: {active:() => hasUpgrade("b", 21)},
+                a31: {active:() => hasMilestone("b", 6)},
         },
         a13: {
                 name: "A 13",
@@ -92,6 +94,7 @@ var MAIN_BUYABLE_DATA = {
                 },
                 a22: {active:() => hasUpgrade("b", 13)},
                 a32: {active:() => hasUpgrade("b", 15)},
+                a21: {active:() => hasUpgrade("b", 21)},
         },
         a21: {
                 name: "A 21",
@@ -166,6 +169,8 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e84)
                         let b1 = new Decimal(10)
                         let b2 = new Decimal(1.2)
+                        if (hasUpgrade("a", 35)) b0 = decimalOne
+                        if (hasMilestone("b", 6)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
                 a32: {active:() => hasMilestone("b", 5)},
@@ -190,6 +195,8 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e138)
                         let b1 = new Decimal(200)
                         let b2 = new Decimal(1.5)
+                        if (hasUpgrade("a", 35)) b0 = decimalOne
+                        if (hasMilestone("b", 6)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
                 b12: {active:() => hasUpgrade("a", 34)},
@@ -205,6 +212,8 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e214)
                         let b1 = new Decimal(5e12)
                         let b2 = new Decimal(2)
+                        if (hasUpgrade("a", 35)) b0 = decimalOne
+                        if (hasMilestone("b", 6)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
         },
@@ -221,6 +230,7 @@ var MAIN_BUYABLE_DATA = {
                         let b2 = new Decimal(1.01)
                         return [b0, b1, b2]
                 },
+                b13: {active:() => hasUpgrade("b", 22)}
         },
         b12: {
                 name: "B 12",
@@ -233,6 +243,20 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(2e8)
                         let b1 = new Decimal(1)
                         let b2 = new Decimal(1.02)
+                        return [b0, b1, b2]
+                },
+        },
+        b13: {
+                name: "B 13",
+                func: "lin",
+                effects: "Beaver gain exponent",
+                base: {
+                        initial: new Decimal(2),
+                },
+                bases(){
+                        let b0 = new Decimal(1e17)
+                        let b1 = new Decimal(3)
+                        let b2 = new Decimal(1.03)
                         return [b0, b1, b2]
                 },
         },
