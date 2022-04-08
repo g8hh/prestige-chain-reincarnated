@@ -633,6 +633,8 @@ addLayer("b", {
         getGainMultPre(){
                 let ret = new Decimal(.05)
 
+                if (hasUpgrade("b", 23)) ret = ret.times(20)
+
                 return ret
         },
         getGainMultPost(){
@@ -780,6 +782,19 @@ addLayer("b", {
                                 return hasUpgrade("b", 21) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("b", 22)
+                23: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Beav-r"
+                        },
+                        description(){
+                                let a = "Gain 20x Base Beaver gain"
+                                return a
+                        },
+                        cost: new Decimal(3e24),
+                        unlocked(){
+                                return hasUpgrade("b", 22) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("b", 23)
         },
         buyables: {
                 rows: 3,

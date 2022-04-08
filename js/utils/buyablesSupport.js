@@ -249,7 +249,7 @@ var MAIN_BUYABLE_DATA = {
         b13: {
                 name: "B 13",
                 func: "lin",
-                effects: "Beaver gain exponent",
+                effects: "Beaver effect exponent",
                 base: {
                         initial: new Decimal(2),
                 },
