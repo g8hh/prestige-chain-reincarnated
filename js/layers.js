@@ -795,6 +795,19 @@ addLayer("b", {
                                 return hasUpgrade("b", 22) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("b", 23)
+                24: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>B-av-r"
+                        },
+                        description(){
+                                let a = "Each B 12 past 50 adds .01 to the B 11 base"
+                                return a
+                        },
+                        cost: new Decimal(2e36),
+                        unlocked(){
+                                return hasUpgrade("b", 23) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("b", 24)
         },
         buyables: {
                 rows: 3,

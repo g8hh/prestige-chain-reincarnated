@@ -223,6 +223,15 @@ var MAIN_BUYABLE_DATA = {
                 effects: "Beavers",
                 base: {
                         initial: new Decimal(1.4),
+                        1: {
+                                active() {
+                                        return hasUpgrade("b", 24)
+                                },
+                                type: "add",
+                                amount(){
+                                        return player.b.buyables[12].sub(50).max(0).div(100)
+                                },
+                        }
                 },
                 bases(){
                         let b0 = new Decimal(1e8)
