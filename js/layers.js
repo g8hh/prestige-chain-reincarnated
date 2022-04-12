@@ -950,7 +950,7 @@ addLayer("b", {
                                 return true
                         },
                         effectDescription(){
-                                return "Reward: B 21 affects A 32 and gives free B 12 and B 13 levels."
+                                return "Reward: B 21 affects A 32 and gives free B 11 and B 12 levels."
                         },
                 }, // hasMilestone("b", 7)
                 8: {
@@ -964,7 +964,7 @@ addLayer("b", {
                                 return true
                         },
                         effectDescription(){
-                                return "Reward: (Milestones / 3)<sup>Milestones</sup> multiplies Beaver gain."
+                                return "Reward: (Milestones / 6)<sup>Milestones</sup> multiplies Beaver gain."
                         },
                 }, // hasMilestone("b", 8)
         },
