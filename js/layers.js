@@ -643,6 +643,7 @@ addLayer("b", {
                 if (hasUpgrade("b", 13))        ret = ret.times(Decimal.pow(2, player.b.upgrades.length))
                 if (hasUpgrade("a", 33))        ret = ret.times(Decimal.pow(player.a.upgrades.length/10, player.a.upgrades.length).max(1))
                                                 ret = ret.times(CURRENT_BUYABLE_EFFECTS["b11"])
+                if (hasMilestone("b", 8))       ret = ret.times(Decimal.pow(Math.max(6, player.b.milestones.length)/6, player.b.milestones.length))
 
                 return ret
         },
@@ -808,6 +809,19 @@ addLayer("b", {
                                 return hasUpgrade("b", 23) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("b", 24)
+                25: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Be-v-r"
+                        },
+                        description(){
+                                let a = "B 21 gives free A 33 levels"
+                                return a
+                        },
+                        cost: new Decimal(3e66),
+                        unlocked(){
+                                return hasUpgrade("b", 24) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("b", 25)
         },
         buyables: {
                 rows: 3,
@@ -816,28 +830,28 @@ addLayer("b", {
                         return hasUpgrade("b", 15) //|| player.c.unlocked
                         }),      
                 12: getGeneralizedBuyableData("b", 12, function(){
-                        return hasMilestone("b", 5) //|| player.b.unlocked
+                        return hasMilestone("b", 5) //|| player.c.unlocked
                         }),
                 13: getGeneralizedBuyableData("b", 13, function(){
-                        return hasUpgrade("b", 21) //|| player.b.unlocked
+                        return hasUpgrade("b", 21) //|| player.c.unlocked
                         }),
-                /*21: getGeneralizedBuyableData("b", 21, function(){
-                        return hasUpgrade("a", 14) //|| player.b.unlocked
+                21: getGeneralizedBuyableData("b", 21, function(){
+                        return player.b.best.gte(1e48) //|| player.c.unlocked
                         }),
                 /*22: getGeneralizedBuyableData("b", 22, function(){
-                        return hasUpgrade("a", 15) //|| player.b.unlocked
+                        return hasUpgrade("a", 15) //|| player.c.unlocked
                         }),
                 /*23: getGeneralizedBuyableData("b", 23, function(){
-                        return hasUpgrade("a", 21) //|| player.b.unlocked
+                        return hasUpgrade("a", 21) //|| player.c.unlocked
                         }),
                 /*31: getGeneralizedBuyableData("b", 31, function(){
-                        return hasUpgrade("a", 22) //|| player.b.unlocked
+                        return hasUpgrade("a", 22) //|| player.c.unlocked
                         }),
                 /*32: getGeneralizedBuyableData("b", 32, function(){
-                        return hasUpgrade("a", 23) //|| player.b.unlocked
+                        return hasUpgrade("a", 23) //|| player.c.unlocked
                         }),
                 /*33: getGeneralizedBuyableData("b", 33, function(){
-                        return hasUpgrade("a", 23) //|| player.b.unlocked
+                        return hasUpgrade("a", 23) //|| player.c.unlocked
                         }),/**/
         },
         milestones: {
@@ -925,6 +939,34 @@ addLayer("b", {
                                 return "Reward: A 31 gives free A 12 levels and remove the linear cost component of A buyables."
                         },
                 }, // hasMilestone("b", 6)
+                7: {
+                        requirementDescription(){
+                                return "1 B 21"
+                        },
+                        done(){
+                                return player.b.buyables[21].gte(1)
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: B 21 affects A 32 and gives free B 12 and B 13 levels."
+                        },
+                }, // hasMilestone("b", 7)
+                8: {
+                        requirementDescription(){
+                                return "5e54 Beavers"
+                        },
+                        done(){
+                                return player.b.points.gte(5e54)
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: (Milestones / 3)<sup>Milestones</sup> multiplies Beaver gain."
+                        },
+                }, // hasMilestone("b", 8)
         },
         tabFormat: {
                 "Upgrades": {

@@ -18,7 +18,16 @@ var MAIN_BUYABLE_DATA = {
                                 amount(){
                                         return CURRENT_BUYABLE_EFFECTS["a13"]
                                 },
-                        }
+                        },
+                        2: {
+                                active(){
+                                        return true
+                                },
+                                type: "add",
+                                amount(){
+                                        return CURRENT_BUYABLE_EFFECTS["b21"]
+                                },
+                        },
                 },
                 bases(){
                         let b0 = new Decimal(30)
@@ -45,7 +54,16 @@ var MAIN_BUYABLE_DATA = {
                                 amount(){
                                         return CURRENT_BUYABLE_EFFECTS["a21"]
                                 },
-                        }
+                        },
+                        2: {
+                                active(){
+                                        return true
+                                },
+                                type: "add",
+                                amount(){
+                                        return CURRENT_BUYABLE_EFFECTS["b21"]
+                                },
+                        },
                 },
                 bases(){
                         let b0 = new Decimal(200)
@@ -81,6 +99,15 @@ var MAIN_BUYABLE_DATA = {
                                 type: "add",
                                 amount(){
                                         return new Decimal(.01).times(player.a.upgrades.length)
+                                },
+                        },
+                        3: {
+                                active(){
+                                        return true
+                                },
+                                type: "add",
+                                amount(){
+                                        return CURRENT_BUYABLE_EFFECTS["b21"]
                                 },
                         },
                 },
@@ -189,7 +216,16 @@ var MAIN_BUYABLE_DATA = {
                                 amount(){
                                         return new Decimal(player.b.upgrades.length).div(5)
                                 }
-                        }
+                        },
+                        2: {
+                                active(){
+                                        return hasMilestone("b", 7)
+                                },
+                                type: "add",
+                                amount(){
+                                        return CURRENT_BUYABLE_EFFECTS["b21"]
+                                },
+                        },
                 },
                 bases(){
                         let b0 = new Decimal(1e138)
@@ -216,6 +252,7 @@ var MAIN_BUYABLE_DATA = {
                         if (hasMilestone("b", 6)) b1 = decimalOne
                         return [b0, b1, b2]
                 },
+                b21: {active:() => hasUpgrade("b", 25)},
         },
         b11: {
                 name: "B 11",
@@ -239,7 +276,8 @@ var MAIN_BUYABLE_DATA = {
                         let b2 = new Decimal(1.01)
                         return [b0, b1, b2]
                 },
-                b13: {active:() => hasUpgrade("b", 22)}
+                b13: {active:() => hasUpgrade("b", 22)},
+                b21: {active:() => hasMilestone("b", 7)},
         },
         b12: {
                 name: "B 12",
@@ -254,6 +292,7 @@ var MAIN_BUYABLE_DATA = {
                         let b2 = new Decimal(1.02)
                         return [b0, b1, b2]
                 },
+                b21: {active:() => hasMilestone("b", 7)},
         },
         b13: {
                 name: "B 13",
@@ -266,6 +305,20 @@ var MAIN_BUYABLE_DATA = {
                         let b0 = new Decimal(1e17)
                         let b1 = new Decimal(3)
                         let b2 = new Decimal(1.03)
+                        return [b0, b1, b2]
+                },
+        },
+        b21: {
+                name: "B 21",
+                func: "lin",
+                effects: "A 1X bases",
+                base: {
+                        initial: new Decimal(2),
+                },
+                bases(){
+                        let b0 = new Decimal(1e50)
+                        let b1 = new Decimal(5)
+                        let b2 = new Decimal(1.05) // fibonacci
                         return [b0, b1, b2]
                 },
         },
