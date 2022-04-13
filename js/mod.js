@@ -12,7 +12,7 @@ let modInfo = {
 
 // Set your version in num and name
 let VERSION = {
-	num: "0.014",
+	num: "0.015",
 	name: "Respecced Reincarnation",
 }
 
@@ -24,18 +24,21 @@ function isEndgame() {
 }
 
 function isEndgameRaw(){
-	return player.b.points.gte("1e83")
+	return player.b.points.gte("1e174")
 }
 
 let changelog = `<h1>Changelog:</h1><br>
 	<br><h2 style='color: #DDDD00'>Endgame:</h2><br>
-		Reaching the endgame screen (updated at least as of v0.014)<br><br>
+		Reaching the endgame screen (updated at least as of v0.015)<br><br>
 	<br><h2 style='color: #00CC00'>Notes</h2><br>
 		- Versions will be vA.B.C<br>
 		- A will be big releases.<br>
 		- B will be each content patch.<br>
 		- C will be small patches without content (bug/wording fixes).<br><br><br>
 
+	<br><h3 style='color: #CC0000'>v0.015</h3><br>
+		- Balanced until 1e174 Beavers.<br>
+		- Added a Beaver upgrade, miletone, and buyable.<br>
 	<br><h3 style='color: #CC0000'>v0.014</h3><br>
 		- Balanced until 1e83 Beavers.<br>
 		- Added a Beaver upgrade and two Beaver miletones.<br>

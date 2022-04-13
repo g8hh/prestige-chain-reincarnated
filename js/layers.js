@@ -391,6 +391,18 @@ addLayer("a", {
                                 return hasUpgrade("b", 21) //|| player.c.unlocked
                         }, 
                 }, // hasUpgrade("a", 35)
+                41: {
+                        title(){
+                                return "<bdi style='color: #" + getUndulatingColor() + "'>Allig-tor"
+                        },
+                        description(){
+                                return "Remove B 11's base cost and A 31 gives free A 21 levels"
+                        },
+                        cost: new Decimal("1e38200"),
+                        unlocked(){
+                                return hasUpgrade("b", 25) //|| player.c.unlocked
+                        }, 
+                }, // hasUpgrade("a", 41)
         },
         buyables: {
                 rows: 3,
@@ -838,8 +850,8 @@ addLayer("b", {
                 21: getGeneralizedBuyableData("b", 21, function(){
                         return player.b.best.gte(1e48) //|| player.c.unlocked
                         }),
-                /*22: getGeneralizedBuyableData("b", 22, function(){
-                        return hasUpgrade("a", 15) //|| player.c.unlocked
+                22: getGeneralizedBuyableData("b", 22, function(){
+                        return hasMilestone("b", 9) //|| player.c.unlocked
                         }),
                 /*23: getGeneralizedBuyableData("b", 23, function(){
                         return hasUpgrade("a", 21) //|| player.c.unlocked
@@ -967,6 +979,20 @@ addLayer("b", {
                                 return "Reward: (Milestones / 6)<sup>Milestones</sup> multiplies Beaver gain."
                         },
                 }, // hasMilestone("b", 8)
+                9: {
+                        requirementDescription(){
+                                return "1e99 Beavers"
+                        },
+                        done(){
+                                return player.b.points.gte(1e99)
+                        },
+                        unlocked(){
+                                return true
+                        },
+                        effectDescription(){
+                                return "Reward: B 13 gives free B 12 levels, remove B 12 base costs, and unlock a new Beaver buyable."
+                        },
+                }, // hasMilestone("b", 9)
         },
         tabFormat: {
                 "Upgrades": {
