@@ -237,7 +237,7 @@ PROGRESSION_MILESTONES_TEXT = {
         25:  "1e16 Beavers",
         26:  "1e64 Beavers",
         27:  "1e256 Beavers",
-        28:  "1e64 Beavers",
+        28:  "1e1024 Beavers",
         29:  "1e729 Alligators",
         30:  "1e2187 Alligators",
         31:  "1e6561 Alligators",
