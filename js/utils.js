@@ -1,5 +1,12 @@
+function nerfBminigameBuyableAmounts(x){
+	if (x.lt(1000)) return x
+	if (hasUpgrade("h", 52)) return x
+	if (player.extremeMode) return x
+	return x.times(x.ln()).div(Math.log(1000))
+}
+
 function combineStrings(l){
-	a = ""
+	let a = ""
 	for (i = 0; i < l.length; i++){
 		if (i != 0) a += ", "
 		a += l[i]
@@ -10,14 +17,14 @@ function combineStrings(l){
 // ***************************
 
 function improveName(s){
-	x = s.split("_")
-	l = x.length
+	if (s == "dna_science") return "DNA Science"
+	let x = s.split("_")
 	ret = ""
 	let uppercaseWord = function(s){
 		a = s.toLowerCase()
 		return a.slice(0,1).toUpperCase() + a.slice(1,)
 	}
-	for (i = 0; i < l; i++){
+	for (i = 0; i < x.length; i++){
 		if (i > 0) ret += " "
 		ret += uppercaseWord(x[i])
 	}
@@ -79,7 +86,6 @@ function canAffordUpgrade(layer, id) {
 	if (tmp[layer].upgrades[id].canAfford === false) return false
 	let cost = tmp[layer].upgrades[id].cost
 	if (cost !== undefined) return canAffordPurchase(layer, upg, cost)
-
 	return true
 }
 
@@ -117,7 +123,7 @@ function buyUpgrade(layer, id) {
 function buyUpg(layer, id) {
 	if (!tmp[layer].upgrades || !tmp[layer].upgrades[id]) return
 	let upg = tmp[layer].upgrades[id]
-	if (!player[layer].unlocked || player[layer].deactivated) return
+	if (!player[layer].unlocked) return
 	if (!tmp[layer].upgrades[id].unlocked) return
 	if (player[layer].upgrades.includes(Number(id))) return
 	if (tmp[layer].deactivated) return 
@@ -192,13 +198,13 @@ function clickGrid(layer, id) {
 
 // Function to determine if the player is in a challenge
 function inChallenge(layer, id) {
+	if (tmp[layer].deactivated) return false
 	let challenge = player[layer].activeChallenge
 	if (!challenge) return false
 	id = toNumber(id)
 	if (challenge == id) return true
 
-	if (layers[layer].challenges[challenge].countsAs)
-		return tmp[layer].challenges[challenge].countsAs.includes(id) || false
+	if (layers[layer].challenges[challenge].countsAs) return tmp[layer].challenges[challenge].countsAs.includes(id) || false
 	return false
 }
 
@@ -224,23 +230,21 @@ function showTab(name, prev) {
 	updateTabFormats()
 	needCanvasUpdate = true
 	document.activeElement.blur()
-
 }
 
 function showNavTab(name, prev) {
-	console.log(prev)
+	//console.log(prev)
 	if (LAYERS.includes(name) && !layerunlocked(name)) return
 	if (player.navTab !== name) clearParticles(function(p) {return p.layer === player.navTab})
 	if (tmp[name] && tmp[name].previousTab !== undefined) prev = tmp[name].previousTab
 	var toTreeTab = name == "tree-tab"
-	console.log(name + prev)
+	//console.log(name + prev)
 	if (name!== "none" && prev && !tmp[prev]?.leftTab == !tmp[name]?.leftTab) player[name].prevTab = prev
 	else if (player[name]) player[name].prevTab = ""
 	player.navTab = name
 	updateTabFormats()
 	needCanvasUpdate = true
 }
-
 
 function goBack(layer) {
 	let nextTab = "none"
@@ -250,7 +254,6 @@ function goBack(layer) {
 
 	if (tmp[layer].leftTab) showNavTab(nextTab, layer)
 	else showTab(nextTab, layer)
-
 }
 
 function layOver(obj1, obj2) {
@@ -325,12 +328,12 @@ function toNumber(x) {
 }
 
 function updateMilestones(layer) {
-	if (tmp[layer].deactivated) return
+	if (tmp[layer].deactivated || !player[layer].unlocked) return
 	shouldPopup = !options.hideMilestonePopups && (tmp[layer].milestonePopups || tmp[layer].milestonePopups === undefined)
 	for (id in layers[layer].milestones) {
 		if (!(hasMilestone(layer, id)) && layers[layer].milestones[id].done()) {
-			player[layer].milestones.push(Number(id))
 			if (!tmp[layer].milestones[id].unlocked) continue
+			player[layer].milestones.push(Number(id))
 			if (layers[layer].milestones[id].onComplete) layers[layer].milestones[id].onComplete()
 			if (shouldPopup) {
 				doPopup("milestone", tmp[layer].milestones[id].requirementDescription, "Milestone Gotten!", 3, tmp[layer].color);
@@ -341,11 +344,11 @@ function updateMilestones(layer) {
 }
 
 function updateAchievements(layer) {
-	if (tmp[layer].deactivated) return
+	if (tmp[layer].deactivated || !player[layer].unlocked) return
 	for (id in layers[layer].achievements) {
 		if (!isPlainObject(layers[layer].achievements[id])) continue
 		if (hasAchievement(layer, Number(id))) continue
-		if (!tmp[layer].achievements[id].unlocked) continue
+		//if (layer != "ach" && !tmp[layer].achievements[id].unlocked) return // none more should be unlockable
 		if (layers[layer].achievements[id].done()) {
 			player[layer].achievements.push(Number(id))
 			if (layers[layer].achievements[id].onComplete) layers[layer].achievements[id].onComplete()
@@ -397,12 +400,11 @@ document.title = modInfo.name
 // Converts a string value to whatever it's supposed to be
 function toValue(value, oldValue) {
 	if (oldValue instanceof Decimal) {
-		value = new Decimal (value)
+		value = new Decimal(value)
 		if (checkDecimalNaN(value)) return decimalZero
 		return value
 	}
-	if (!isNaN(oldValue)) 
-		return parseFloat(value) || 0
+	if (!isNaN(oldValue)) return parseFloat(value) || 0
 	return value
 }
 

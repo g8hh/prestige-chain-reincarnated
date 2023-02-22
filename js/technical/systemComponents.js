@@ -6,7 +6,7 @@ var systemComponents = {
 				<div v-for="tab in Object.keys(data)">
 					<button v-if="data[tab].unlocked == undefined || data[tab].unlocked" v-bind:class="{tabButton: true, notify: subtabShouldNotify(layer, name, tab), resetNotify: subtabResetNotify(layer, name, tab)}"
 					v-bind:style="[{'border-color': tmp[layer].color}, (subtabShouldNotify(layer, name, tab) ? {'box-shadow': 'var(--hqProperty2a), 0 0 20px '  + (data[tab].glowColor || defaultGlow)} : {}), tmp[layer].componentStyles['tab-button'], data[tab].buttonStyle]"
-						v-on:click="function(){player.subtabs[layer][name] = tab; updateTabFormats(); needCanvasUpdate = true;}">{{tab}}</button>
+						v-on:click="function(){player.subtabs[layer][name] = tab; updateTabFormats(); needCanvasUpdate = true;}"><span v-html="tab"></span></button>
 				</div>
 			</div>
 		`
@@ -148,10 +148,40 @@ var systemComponents = {
 		Enter Modes: 
 		<table>
 			<tr>
-				
+				<td>
+					<button class="opt" onclick="enterHardMode()">
+						<span v-if="player.hardMode"><bdi style='color:#CC0033'>{{"In hard mode"}}</bdi></span>
+						<span v-if="!player.hardMode"><bdi style='color:#3300CC'>{{"Enter hard mode"}}</bdi></span>
+					</button>
+				</td>
+				<td>
+					<button class="opt" onclick="enterExtremeMode()">
+						<span v-if="player.extremeMode"><bdi style='color:#CC0033'>{{"In extreme mode"}}</bdi></span>
+						<span v-if="!player.extremeMode"><bdi style='color:#3300CC'>{{"Enter extreme mode"}}</bdi></span>
+					</button>
+				</td>
+				<td>
+					<button class="opt" onclick="enterEasyMode()">
+						<span v-if="player.easyMode"><bdi style='color:#CC0033'>{{"In easy mode"}}</bdi></span>
+						<span v-if="!player.easyMode"><bdi style='color:#3300CC'>{{"Enter easy mode"}}</bdi></span>
+					</button>
+				</td>
 			</tr>
 		</table>
 		<br><br>
+		<h2 style='color: #FF0066'>Hard mode</h2>:<br>
+		Most passive gains are 4x less and various other smaller nerfs<br><br>
+
+		<h2 style='color: #FF0066'>Easy mode</h2>:<br>
+		All bulk buying is done by default<br>
+		Gain 2x of all prestige currencies, and 4x of all passive gain currencies<br>
+		Gain 2x resets at once and pre-Phosphorus resource gain ^1.001<br><br>
+
+		<h2 style='color: #FF0066'>Extreme mode</h2>:<br>
+		Gain of all currencies is raised ^.75 (after everything except dilation).<br>
+		In exchange, unlock a new layer, Science!<br>
+		For protein, boosts from things other than mRNA and tRNA are ^.75<br><br>
+		
 		</span>
 		
 		<span v-if="!player.modTab">
@@ -186,15 +216,33 @@ var systemComponents = {
 
 		<h2 style='color: #7D5D9E'>Acknowledgements</h2><br>
 		Thank you to <b>Jacorb</b> for letting me use his multi save code!<br>
+		Thank you to <b>Digiprime</b> for the idea for the Organ layer!<br>
 		Thank you to <b>Lordshinjo</b> for a specific and accurate bug report on "autobuying"<br>buyables and helping to subsequently fix.<br>
+		Thank you to <b>Virgil</b> for suggesting Taxonomy ranks and the general idea.<br>
 
 		<br><br><span v-if="player.showBuiltInSaves">
 			<h2 style='color: #00FF99'>Built in saves</h2><br>
-			To import: import the string with <i>capitalization</i> correct and no trailing spaces.<br>
 			<bdi style='color: #F16105'>Warning: Scrolling past here may contains spoilers.</bdi><br><br>
-			<span v-for="key in CUSTOM_SAVES_IDS">{{key}}<br></span>
+
+			<button class="opt" onclick="player.CUSTOM_SAVES_PAGE = Math.max(0, player.CUSTOM_SAVES_PAGE - (player.shiftAlias ? 5 : 1))">Previous<br>page<br>(Shift 5x)</button>
+			<button class="opt" onclick="player.CUSTOM_SAVES_PAGE = Math.min(Math.floor(CUSTOM_SAVE_IDS.length / 20), player.CUSTOM_SAVES_PAGE + (player.shiftAlias ? 5 : 1))">Next<br>page<br>(Shift 5x)</button>
+			<br>
+			<span>Page {{player.CUSTOM_SAVES_PAGE+1}} / {{1+Math.floor(CUSTOM_SAVE_IDS.length / 20)}}</span>
+			<br><br>
+
+			<template v-for="(key, i) in CUSTOM_SAVES_IDS">
+				<table>
+					<tr v-if="i >= 20 * player.CUSTOM_SAVES_PAGE && i < (player.CUSTOM_SAVES_PAGE + 1) * 20">
+						<button class="savebutton" v-on:click="importSave(key, false, true)">
+							<span v-if="key.slice(0,2) == 'EX' " style='color: #AA3333'>EXTREME </span>
+							<span v-if="key.slice(0,2) != 'EX' " style='color: #339966'>NORMAL </span>
+							Import '{{key.replace("EX: ", "")}}' save
+						</button>
+					</tr>
+				</table>
+			</template> 
 		</span>
-		<br><br>
+		<br><br><br><br>
 		</span>
 
 		</div>
