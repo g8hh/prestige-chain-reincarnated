@@ -12,7 +12,7 @@ var activeFunctions = [
 	"tabFormat", "content",
 	"onComplete", "onPurchase", "onEnter", "onExit", "done",
 	"getUnlocked", "getStyle", "getCanClick", "getTitle", "getDisplay",
-	"getMinigameMaximum", "maxTimes", "exitMinigame", 
+	"getMinigameMaximum", "maxTimes", "exitMinigame", "isAutobought",
 ]
 
 var noCall = doNotCallTheseFunctionsEveryTick
@@ -95,12 +95,12 @@ function updateTemp(noError = false) {
 	updateTempData(layers, tmp, funcs, undefined, noError, true)
 
 	for (layer in layers){
-		tmp[layer].resetGain = getResetGain(layer)
-		tmp[layer].nextAt = getNextAt(layer)
+		tmp[layer].resetGain = 	tmp[layer].getResetGain ? tmp[layer].getResetGain : getResetGain(layer)
+		tmp[layer].nextAt = 	tmp[layer].getNextAt ? tmp[layer].getNextAt : getNextAt(layer)
 		tmp[layer].nextAtDisp = getNextAt(layer, true)
-		tmp[layer].canReset = canReset(layer)
+		tmp[layer].canReset = 	canReset(layer)
 		tmp[layer].trueGlowColor = tmp[layer].glowColor
-		tmp[layer].notify = shouldNotify(layer)
+		tmp[layer].notify = 	shouldNotify(layer)
 		tmp[layer].prestigeNotify = prestigeNotify(layer)
 		if (tmp[layer].passiveGeneration === true) tmp[layer].passiveGeneration = 1 // new Decimal(true) = decimalZero
 
@@ -146,7 +146,7 @@ function updateTempData(layerData, tmpData, funcsData, useThis, noError = false,
 			else value = layerData[item]()
 			if (value !== value || checkDecimalNaN(value)){
 				if (!NaNalert && !noError) {
-					console.log(value, layerData, funcsData, tmpData, useThis)
+					console.log("a", value, "b", item, "c", layerData[item], layerData, funcsData, tmpData, useThis)
 					confirm("Invalid value found in tmp, named '" + item + "'. Please let the creator of this mod know with a screenshot of the console and the save! You can refresh the page, and you will be un-NaNed.")
 					clearInterval(interval);
 					NaNalert = true;

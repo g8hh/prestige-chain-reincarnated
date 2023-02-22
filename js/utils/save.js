@@ -64,8 +64,8 @@ function deleteSave(name) {
 	}
 	if (!confirm("Are you sure you wish to delete your save named " + name + "?")) return
 	allSaves[name] = undefined
-	if (name==allSaves.set) {
-		let valid = Object.keys(allSaves).filter(x => (x!="set" && (allSaves[x]!==undefined||x==name)))
+	if (name == allSaves.set) {
+		let valid = Object.keys(allSaves).filter(x => (x != "set" && (allSaves[x] !== undefined || x == name)))
 		let toLoad = valid[(valid.indexOf(name)+1)%valid.length]
 		loadSave(toLoad)
 	}
@@ -134,8 +134,6 @@ function resetSaveMenu() { // reset the menu display
 	player.saveMenuOpen = true
 }
 
-
-
 // **LOADING SAVE STUFF**
 
 function load() {
@@ -176,22 +174,21 @@ function load() {
 	updateTemp(true)
 	loadVue()
 	updateTemp()
+	updateTemp()
 
 	player.saveMenuOpen = false // Slight quality of life :)
 }
 
 function loadOptions() {
 	let get2 = localStorage.getItem(modInfo.id+"_options")
-	if (get2) 
-		options = Object.assign(getStartOptions(), JSON.parse(decodeURIComponent(escape(atob(get2)))))
-	else 
-		options = getStartOptions()
+	if (get2) options = Object.assign(getStartOptions(), JSON.parse(decodeURIComponent(escape(atob(get2)))))
+	else options = getStartOptions()
 	if (themes.indexOf(options.theme) < 0) theme = "default"
 	fixData(options, getStartOptions())
 }
 
 function setupModInfo() {
-	modInfo.changelog = changelog
+	modInfo.changelog = CHANGELOGS[0]
 	modInfo.winText = winText ? winText : `Congratulations! You have reached the end and beaten this game, but for now...`
 }
 
@@ -211,6 +208,7 @@ function NaNcheck(data) {
 			if (!NaNalert) {
 				clearInterval(interval)
 				NaNalert = true
+				console.log(data, item)
 				alert("Invalid value found in player, named '" + item + "'. Please let the creator of this mod know! You can refresh the page, and you will be un-NaNed.")
 				return false
 			}
@@ -223,6 +221,7 @@ function NaNcheck(data) {
 	}
 	return curr
 }
+
 function exportSave() {
 	//if (NaNalert) return
 	let str = btoa(JSON.stringify(player))
@@ -237,11 +236,15 @@ function exportSave() {
 	doPopup("export", "", "Save Exported!", 1, "#25B9E3");
 }
 
-function importSave(imported = undefined, forced = false) {
+function importSave(imported = undefined, forced = false, fromCustomSaves = false) {
 	if (imported === undefined) imported = prompt("Paste your save here")
 	try {
 		let confirmString = "This save appears to be for a different mod! Are you sure you want to import?"
-		if (CUSTOM_SAVES_IDS.includes(imported)) imported = CUSTOM_SAVES[imported]
+		if (CUSTOM_SAVES_IDS.includes(imported)) {
+			let cString = "Are you sure you want to import the '" + imported + "' save?" 
+			if (fromCustomSaves) if (!confirm(cString.replace("EX: ", ""))) return 
+			imported = CUSTOM_SAVES[imported]
+		}
 		let x = atob(imported)
 		console.log(x)
 		tempPlr = Object.assign(getStartPlayer(), JSON.parse(atob(imported)));

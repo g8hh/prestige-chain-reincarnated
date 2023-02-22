@@ -1,8 +1,8 @@
 let modInfo = {
-	name: "Prestige Chain Reincarnated",
-	id: "prestige_chain_reincarnated",
+	name: "The Tree of Life",
+	id: "tree_of_life",
 	author: "pg132",
-	pointsName: "Points",
+	pointsName: "Life Points",
 	modFiles: ["layers.js", "tree.js"],
 	discordName: "",
 	discordLink: "",
@@ -10,105 +10,27 @@ let modInfo = {
 	offlineLimit: 0,  // In hours
 }
 
-// Set your version in num and name
-let VERSION = {
-	num: "0.015",
-	name: "Respecced Reincarnation",
-}
-
-
-var forceEndgame = false
-function isEndgame() {
-	if (forceEndgame) return true
-	return isEndgameRaw()
-}
-
-function isEndgameRaw(){
-	return player.b.points.gte("1e174")
-}
-
-let changelog = `<h1>Changelog:</h1><br>
-	<br><h2 style='color: #DDDD00'>Endgame:</h2><br>
-		Reaching the endgame screen (updated at least as of v0.015)<br><br>
-	<br><h2 style='color: #00CC00'>Notes</h2><br>
-		- Versions will be vA.B.C<br>
-		- A will be big releases.<br>
-		- B will be each content patch.<br>
-		- C will be small patches without content (bug/wording fixes).<br><br><br>
-
-	<br><h3 style='color: #CC0000'>v0.015</h3><br>
-		- Balanced until 1e174 Beavers.<br>
-		- Added a Beaver upgrade, milestone, and buyable.<br>
-	<br><h3 style='color: #CC0000'>v0.014</h3><br>
-		- Balanced until 1e83 Beavers.<br>
-		- Added a Beaver upgrade and two Beaver miletones.<br>
-	<br><h3 style='color: #CC0000'>v0.013</h3><br>
-		- Balanced until 1e50 Beavers.<br>
-		- Added two Beaver upgrades.<br>
-	<br><h3 style='color: #CC0000'>v0.012</h3><br>
-		- Balanced until 1e24 Beavers.<br>
-		- Added a Alligator upgrade and two Beaver upgrades.<br>
-		- Added a Beaver buyable and milestone.<br>
-	<br><h3 style='color: #CC0000'>v0.011</h3><br>
-		- Balanced until 1e13 Beavers.<br>
-		- Added two Beaver buyables and a Alligator upgrade.<br>
-		- Added a Beaver milestone.<br>
-	<br><h3 style='color: #CC0000'>v0.010</h3><br>
-		- Balanced until 2e8 Beavers.<br>
-		- Added an Alligator and a Beaver upgrade.<br>
-	<br><h3 style='color: #CC0000'>v0.009</h3><br>
-		- Balanced until 1e941 Alligators.<br>
-		- Added an Alligator and a Beaver upgrade.<br>
-		- Added a custom save.<br>
-	<br><h3 style='color: #CC0000'>v0.008</h3><br>
-		- Balanced until 1e819 Alligators.<br>
-		- Added a Alligator and a Beaver upgrade.<br>
-		- Various code clean up, particularly around generalized buyables.<br>
-	<br><h3 style='color: #CC0000'>v0.007.1</h3><br>
-		- Added five rows of achievements.<br>
-		- Made early Alligator upgrades unlock with the previous.<br>
-	<br><h3 style='color: #CC0000'>v0.007</h3><br>
-		- Added two Beaver milestones.<br>
-		- Added two Beaver upgrades.<br>
-		- Balanced until 20 Beaver resets.<br>
-	<br><h3 style='color: #CC0000'>v0.006</h3><br>
-		- Added an Alligator buyable.<br>
-		- Added an Alligator upgrade.<br>
-		- Added Beaver, a new layer!<br>
-		- Added two Beaver milestones.<br>
-		- Added hotkeys for moving to and resetting A/B.<br>
-		- Added a custom save.<br>
-		- Various code cleanup and bugfixes.<br>
-		- Added an Infobox to Alligator upgrades, <i>read it</i>.<br>
-		- Balanced until 3 Beaver resets.<br>
-	<br><h3 style='color: #CC0000'>v0.005</h3><br>
-		- Added an Alligator milestone and buyable.<br>
-		- Balanced until 1e1850 Points.<br>
-	<br><h3 style='color: #CC0000'>v0.004</h3><br>
-		- Added an Alligator upgrade, milestone, and buyable.<br>
-		- Balanced until 1e1160 Points (squared!).<br>
-		- Made new achievement rows work properly.<br>
-		- Added a custom save.<br>
-	<br><h3 style='color: #CC0000'>v0.003</h3><br>
-		- Balanced until 1e580 Points.<br>
-		- Added three Alligator upgrades, two Alligator milestones, and three Alligator buyables.<br>
-	<br><h3 style='color: #CC0000'>v0.002</h3><br>
-		- Balanced until 2e16 Alligators.<br>
-		- Added two Alligator upgrades and an Alligator buyable.<br>
-		- Various code improvements.<br>
-	<br><h3 style='color: #CC0000'>v0.001.8</h3><br>
-		- Balanced until 200 Alligators.<br>
-		- Added two Alligator upgrades and two Alligator buyables.<br>
-		- Various code changes.<br>
-	<br><h3 style='color: #CC0000'>v0.001.5</h3><br>
-		- Various changes to make the game "playable".<br>
-	`
-
 let winText = `Congratulations! You have reached the end of this patch! More content is to come...`
 
 // If you add new functions anywhere inside of a layer, and those functions have an effect when called, add them here.
 // (The ones here are examples, all official functions are already taken care of)
-var doNotCallTheseFunctionsEveryTick = ["blowUpEverything",]
+var doNotCallTheseFunctionsEveryTick = [
+	"blowUpEverything",
+	"costFormula",
+	"costFormulaID",
+	"costFormula2",
+	"getCoords",
+	"getMaxCoord",
+	"getGemEffect",
+	"updateCoins",
+	"updateUpgradeAutobuyers",
+	"updateMinigames",
+	"updateUniverse",
+	"autobuyRadioWaves",
+	"updateBestBuyables",
+	"doImprovedPassiveGain",
+	"getCompletedLevels",
+	]
 
 function getStartPoints(){
     	return new Decimal(modInfo.initialStartPoints)
@@ -124,6 +46,11 @@ function addedPlayerData() { return {
 	toggleKeys: false,
 	undulating: false,
 	lastSave: new Date().getTime(),
+	hardMode: false,
+	easyMode: false,
+	extremeMode: false,
+	hardFromBeginning: false,
+	extremeFromBeginning: false,
 	arrowHotkeys: true,
 	modTab: false,
 	lastLettersPressed: [],
@@ -131,11 +58,21 @@ function addedPlayerData() { return {
 	wordsSpelled: 0,
 	currentTime: new Date().getTime(),
 	showBuiltInSaves: false,
-	dev: {},
+	dev: {
+		fastCorn: false,
+		aPointMult: undefined,
+		bPointMult: undefined,
+		cPointMult: undefined,
+		dPointMult: undefined,
+		ePointMult: undefined,
+		autobuytokens: false,
+	},
 	spaceBarPauses: false,
 	paused: false,
 	shiftAlias: false,
 	controlAlias: false,
+	CUSTOM_SAVES_PAGE: 0,
+	CHANGELOG_PAGE: 0,
 }}
 
 function getLastSaveDisplay(a){
@@ -176,7 +113,10 @@ var displayThings = [
 	}, 
 	function(){
 		if (paused || player.paused) return "<bdi style='color:#CC0033'>THE GAME IS PAUSED</bdi>"
-		if (player.keepGoing && isEndgameRaw()) return makeBlue("You are past endgame,<br>and the game might not be balanced here.")
+		if (player.cells.slowTime > 0) return "For the next " + makeGreen(formatTime(player.cells.slowTime)) + " real seconds,<br>the game will tick 100x slower"
+		if (inChallenge("l", 11)) return "Dilation exponent is currently 1/" + format(getPointDilationExponent().pow(-1))
+		if (player.keepGoing && isEndgameRaw()) return makeBlue("You are past endgame,<br>and the game might break here.")
+		if (player.extremeMode) return "You are in extreme mode"
 	},
 ]
 
@@ -187,11 +127,6 @@ var backgroundStyle = {
 // You can change this if you have things that can be messed up by long tick lengths
 function maxTickLength() {
 	return 1 // Default is 1 hour which is just arbitrarily large
-}
-
-// Use this if you need to undo inflation from an older version. If the version is older than the version that fixed the issue,
-// you can cap their current resources with this.
-function fixOldSave(oldVersion){
 }
 
 var controlDown = false
@@ -281,6 +216,50 @@ function toggleControl(){
 
 function toggleUndulating(){
 	player.undulating = !player.undulating
+}
+
+function enterHardMode(){
+	let s = "Are you sure you want to enter hard mode? This cannot be undone."
+	if (!confirm(s)) return 
+	if (player.extremeMode) {
+		if (!confirm("You are already in extreme mode, this is not advised." + s)) return 
+	}
+	if (confirm("Would you like to apply that to this save [cancel] or create a new save [okay]?")) {
+		// this means you said okay so create a new save
+		newSave("hard")
+	} else {
+		// apply to this save
+		player.hardMode = true
+		if (player.h.best.lt(10) && !player.o.unlocked && !player.c.unlocked) player.hardFromBeginning = true
+	}
+}
+
+function enterExtremeMode(){
+	let s = "Are you sure you want to enter extreme mode? This cannot be undone."
+	if (!confirm(s)) return 
+	if (player.hardmode) {
+		if (!confirm("You are already in hard mode, this is not advised." + s)) return 
+	}
+	if (confirm("Would you like to apply that to this save [cancel] or create a new save [okay]?")) {
+		// this means you said okay so create a new save
+		newSave("extreme")
+	} else {
+		// apply to this save
+		player.extremeMode = true
+		if (player.h.best.lt(10) && !player.o.unlocked && !player.c.unlocked) player.extremeFromBeginning = true
+	}
+}
+
+function enterEasyMode(){
+	let s = "Are you sure you want to enter easy mode? This cannot be undone."
+	if (!confirm(s)) return 
+	if (confirm("Would you like to apply that to this save [cancel] or create a new save [okay]?")) {
+		// this means you said okay so create a new save
+		newSave("easy")
+	} else {
+		// apply to this save
+		player.easyMode = true
+	}
 }
 
 function toggleArrowHotkeys(){

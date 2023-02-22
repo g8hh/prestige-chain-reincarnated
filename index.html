@@ -18,10 +18,15 @@
 
 	<script src="js/technical/layerSupport.js"></script>
 	<script src="js/achievements.js"></script>
+	<script src="js/utils/gamblingSupport.js"></script>
 	<script src="js/utils/hotkeySupport.js"></script>
 	<script src="js/utils/mathSupport.js"></script>
-	<script src="js/utils/buyablesSupport.js"></script>
-	<script src="js/utils/prestigeSupport.js"></script>
+	<script src="js/utils/gemSupport.js"></script>
+	<script src="js/utils/formulaDisplaySupport.js"></script>
+	<script src="js/utils/taxonomySupport.js"></script>
+	<script src="js/utils/tokenSupport.js"></script>
+	<script src="js/utils/standardModelSupport.js"></script>
+	<script src="js/versions.js"></script>
 	<script src="js/mod.js"></script>
 	<script src="js/technical/loader.js"></script>
 
@@ -46,8 +51,8 @@
 
 
 <body onload="load()" onmousemove="updateMouse(event)">
-<script src="chs.js?202106041511"></script>
-<script src="//g8hh.com/zh/core.js"></script>
+<script src="chs.js"></script>
+<script src="core.js"></script>
 	<div id="app">
 		<canvas id="treeCanvas" class="canvas" v-if="!(tmp.gameEnded && !player.keepGoing)"></canvas>
 
@@ -145,21 +150,21 @@
 		<div class = "bg2" v-bind:style = "tmp.backgroundStyle"></div>
 
 	</div>
-</body>
 <!--客服 开始-->
 <script src="//g8hh.com/static/js/jquery.min.js"></script>
 <link rel="stylesheet" href="//g8hh.com/static/css/kf.css" type="text/css" media="screen" charset="utf-8">
 <script src="//g8hh.com/static/js/kf.js"></script>
 <!-- 客服 结束 -->
 <!--站长统计-->
-    <div style="display: none">
-<script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?dbb7ff142f4d4b68546c93b9cd6e9328";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
-</script>
-    </div>
+<div style="display: none">
+    <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?dbb7ff142f4d4b68546c93b9cd6e9328";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+        </div>
+</body>
